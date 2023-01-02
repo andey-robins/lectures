@@ -26,7 +26,7 @@ sudo apt install texlive-pictures
         {
             "match": "\\-slides.md",
             "isAsync": true,
-            "cmd": "pandoc -t beamer ${file} -o ${fileDirname}/${fileBasenameNoExt}.pdf
+            "cmd": "pandoc -t beamer ${file} -o ${fileDirname}/${fileBasenameNoExt}.pdf"
         }
     ]
 }
