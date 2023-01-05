@@ -250,7 +250,7 @@ for i in range(2, int(n ** 0.5)+1):
 
 ---
 
-![Design Patterns Cover](./sdd/assets/01/gof_book.jpg)
+![Design Patterns Cover](./ssd/assets/01/gof_book.jpg)
 
 ## Citibank Hack (1995)
 
