@@ -79,6 +79,10 @@ In this course, you will learn the techniques and processes employed by skillful
 
 # The History of Software Engineering
 
+---
+
+What follows is a very abridged, loosly structured, highly opinionated view of the history of software engineering. I ask you to pay attention to trends and common themes more than any individual contribution. History is a series of movements, not individual, revolutionary steps. Here be dragons.
+
 ## Outline
 
 1. The Early Days (200 BCE - 1980s)
@@ -93,15 +97,30 @@ In this course, you will learn the techniques and processes employed by skillful
 
 ## The Antikythera Mechanism
 
-- The antikythera mechanism (circa 200 BCE)
+- The oldest analogue computer
+- Used to calculate astornomical positions and eclipses
+
+---
+
+![The Antikythera Mechanism](./ssd/assets/01/antikythera.jpg)
 
 ## Babbage's Analytical Engine
 
-- Babbage Analytical Engine (1837)
+- Credited as the first computer
+- Has an ALU, control flow, loops, and memory
+- First turing complete computer
+
+---
+
+![The Analytic Engine](./ssd/assets/01/babbage.jpg)
 
 ## Ada Lovelace
 
-- The first programmer (1842)
+- Augusta King (1815 - 1852)
+  - Countess of Lovelace, Augusta Ada King
+  - AKA Ada Lovelace
+- Published the first algorithm to be run by a computer
+- Made to run on Babbage's Analytical Engine
 
 ---
 
@@ -110,8 +129,8 @@ In this course, you will learn the techniques and processes employed by skillful
 ## The First Computed Algorithm
 
 - Tom Kilburn
-- the greatest divisor of 2^18 (262,144)
-- 58 minutes to run
+- First implemented program calculates the greatest divisor of 2^18 (262,144)
+- Took 58 minutes to run
 
 ---
 
@@ -132,32 +151,72 @@ for i in range(2, int(n ** 0.5)+1):
 
 ## The Transistor
 
+- Came to replace vacuum tubes
+- Is the reason computers are reasonable sizes
+- Led to the computer being a consumer product
+
 ## First Compilers
 
-- development of "programming" with first compilers and cobol/fortran
+- Plugging wires around and moving switches is hard, wouldn't it be nice if we had a program that could handle putting the program into the computer on its own?
 
 ## COBOL
 
-## Waterfall Design
+- There's a whole bunch of ways to program computers, wouldn't it be nice if there was some sort of coordinated logic for doing that?
 
-- waterfall development (1970)
+## Waterfall Design (1970)
 
-## C
+- Formalizes the code writing process
+- Creates a step by step process to create software
+- One of the first industry standard processes
 
-- introduction of c (1972)
+---
 
-## The Apple II
+![Waterfall design pattern](./ssd/assets/01/Waterfall_model.png)
 
-- apple II and the beginning of personal computing
-  - led to the creation of software development
+## C (1972)
+
+- Major standard
+- Still around today
+- Made interfacing with hardware more general and straightforward
+
+## Aside: C vs Rust
+
+- "The last fifty years were written in C. The next fifty will be written in Rust"
+- `NULL` was a "billion dollar mistake"
+- NSA recommends businesses stop writing new software in C and instead use a memory safe language
+
+## The Apple II (1977)
+
+- Began the wave of personal computing
+- One of the first mass produced computers
+- Affordable enough for home usage
+- Led to the need for rigorous, deployable, software engineering
 
 # The Era of Personal Computing
 
 ## DRM introduced (1983)
 
+- Digital Rights Management
+- The idea that intellectual property distributed digitally should be protected
+- Gave rise to the cracking and piracy communities
+- Valid and Questionable applications even to this day
+  - Further complicated by the lack of "ownership" of digital goods
+
 ## Word & Excel (mid 80s)
 
+- Some of the earliest "killer apps" for computers
+- Proved the usefulness of computers within business contexts
+- Proprietary and licensed
+
 ## Ping-Pong Virus & Cyberaids (1988)
+
+- One of the first boot sector viruses
+  - Caused a block to ping pong across the screen instead of booting
+- CyberAIDS was one of the first major pieces of malware to escape into the world
+
+---
+
+![The banner text for CyberAIDS](./ssd/assets/01/CyberAIDS%20banner.png)
 
 ## Therac-25
 
@@ -165,19 +224,51 @@ for i in range(2, int(n ** 0.5)+1):
 - Radiation therapy machine
 - Delivered lethal doses of radiation to patients due to race conditions in the code
 
+---
+
+![Therac 25 Device](./ssd/assets/01/therac25.jpeg)
+
 # Web 1.0
 
 ## The Internet (1991)
 
+- much wow
+- nifty! [citation needed]
+- home of XKCD
+
 ## Linux Kernel (1991)
+
+- One of the first major OSS projects to gain traction
+- Led to the major offshoots of operating systems we see today
+- Established a lot of the precedent for OSS work
 
 ## Design Patterns (GoF) (1994)
 
+- An attempt to structure the practice of software engineering like other engineering disciplines
+- Codified common practices of the day
+- Seen by many as the foundation of modern software development
+
+---
+
+![Design Patterns Cover](./sdd/assets/01/gof_book.jpg)
+
 ## Citibank Hack (1995)
+
+- Russian hackers extracted ~$10 million dollars
+- First big-money/big-industry hit of the hacking community
+- Proved the vulnerability of major systems to the public
 
 ## Php (1995)
 
+- Greatly simplified and abstracted the process of developing web applications
+- Allowed for software development practices to be translated into the web
+  - No longer requiring stringing together HTML and CSS and other small pieces
+
 ## Java (1996)
+
+- Why was java revolutionary?
+- Runs on the JVM
+- Widespread adoption of OO
 
 ## Mobile Devices
   
@@ -195,31 +286,81 @@ for i in range(2, int(n ** 0.5)+1):
 
 ## ILOVEYOU (2000)
 
-## mafiaboy (2000)
+- Computer worm infection 10 million+ machines at the turn of the centur6y
+- Overwrites, moves, and modifies random files before sending itself to as many people in the address book as possible
+- One of the earliest email viruses
 
-## US vs Microsoft (2001)
+## Agile (2001)
 
-## agile (2001)
+While the waterfall design methodology had its place, the needs of SaaS businesses require being able to adapt software to business needs faster than the methodology allows. Enter "Agile" methodologies (Scrum, Kanban, XP, etc.) which completely change the way software is designed, written, produced, and maintained.
 
 ## Gary McKinnon and Military hacking (2001-2002)
 
+- Gary McKinnon was a foreign civilian who broke into US military networks
+- Ran through them for multiple years
+- Only looking for proof of UFOs
+
 ## AWS (2002)
 
-## Dot Com Crash
+- Web service provider
+- Currently runs one third of the internet [Forbes]
+- Expanding to provide any IaaS service you could need
+- Lambda, EC2, S3, Dynamo, etc.
 
-## Anonymous is first observed (2003)
+## Making Money as a Tech Business
 
-## sandworm/voodoo bear is first observed (2004)
+- Large amounts of capital combined with a new, emerging technology led to unwise investments
+- Company must balloon quickly and gain a lions-share of users/marketshare
+- Convert this dominance to sales
+- Without a plan to become profitable, investors lose faith
+- The money dries up
+- The company is either Facebook or Myspace
+
+## Dot Com Bubble
+
+- The start of the internet led to unknowns surrounding businesses operating in the space
+- Low interest rates at the end of the '80s and early '90s meant lots of VC funding
+- Any old idea could get pitched as investors wanted to get into the space
+
+---
+
+![VC Funding in businesses around the dot-com bubble](./ssd/assets/01/dot_com_bubble.png)
+
+## Sandworm/Voodoo Bear is First Observed (2004)
+
+- Later known for NotPetya
+- Took down the Ukranian power grid in 2015
+- Attacked Ukraine in 2017
+- Responsible for the cyberattack on the 2018 Winter Olympic Games
+- The earliest APT I could find
 
 ## Ruby & Rails (2004)
+
+- Built on the idea that software should be understood by humans first and computers second
+- The first major "full-stack framework" which applied software engineering patterns and paradigms
+- An evolution of PHP, further increasing accessibility for software development for the web
 
 # The Agile Age
 
 ## jQuery (2006)
 
-## The Iceman Hacks (2006)
+- It turns out, pure javascript doesn't integrate with the DOM very well
+- Wouldn't it be nice if there was a tool which allows us to interact with the DOM?
+
+*"Anonymous is tired of corporate interests controlling the internet and silencing the people’s rights to spread information, but more importantly, the right to SHARE with one another. The RIAA and the MPAA feign to aid the artists and their cause; yet they do no such thing. In their eyes is not hope, only dollar signs. Anonymous will not stand this any longer."* - Anonymous
 
 ## First iPhone (2007)
+
+- Did for mobile computing what the Apple ][ did for home computing
+- Put a computer in everyone's pocket
+- Increased "software engineering" to include mobile applications
+- Drove the need for meshnets across the world
+
+## Anonymous is First Observed (2008)
+
+- First association with hacktivism
+  - Previously known basically for being a club on 4chan
+- Began as attacks against the Church of Scientology
 
 ## Node (2009)
 
@@ -227,9 +368,18 @@ for i in range(2, int(n ** 0.5)+1):
 - Led to the disaster that is NPM
 - Can be credited with popularizing "full stack" development
 
-## Vixen Panda is first observed (2009)
+## Putter Panda is First Observed (2009)
+
+- Hacking group out of China
+- Focus on satellite and communications technology
+- Steals trade and military secrets
+- Primarily make use of spear-phishing
 
 ## The Lazarus Group is first observed (2009)
+
+- The North Korean state sponsored hacker group
+- Responsible for breaches of corporate networks
+- Tried to delete the movie *The Interview (2014)*
 
 # The MicroService Era
 
@@ -237,8 +387,21 @@ for i in range(2, int(n ** 0.5)+1):
 
 - Webpages are hard, so what if there was a way to act like they used older ideas?
 - Angular was the first popular framework to emerge for building web applcations
+- Combine individual pieces componentwise
+
+## Stuxnet is First Observed (2010)
+
+- Malicious cyber worm developed by the USA
+- Hyper-targeted malware which could destroy nuclear centrifuge's
+- Used to cripple the nuclear program of Iran
 
 ## Microservices (2012)
+
+- Having everything in one massive monolith makes things a little difficult, wouldn't it be cool if we could write small, individual parts and plug them all together?
+- When they work, it's almost like magic
+- When they don't, it's often nearly impossible to figure out why
+- Work well for massive organizations where engineering teams aren't able to directly communicate all the time
+- Rely on rigorous design documents
 
 ## Electron (2013) 
 
@@ -255,9 +418,13 @@ for i in range(2, int(n ** 0.5)+1):
 
 ---
 
-![Why did containers happen?](assets/01/containers.png)
+![Why did containers happen?](./ssd/assets/01/containers.png)
 
 ## React (2013)
+
+- Currently the largest Component Library
+- Instead of writing individual components, you can build them up like a model kit
+- Streamlines frontend building
 
 ## Footnote: React-native (2015)
 
@@ -274,7 +441,11 @@ for i in range(2, int(n ** 0.5)+1):
 
 ![Heartbleed XKCD](./ssd/assets/01/heartbleed_explanation.png)
 
-## crypto, solidity, blockchain (2014)
+## Solidity (2014)
+
+- Runs on the Ethereum Virtual Machine
+- Currently v0.8.17
+- "Smart Contracts"
 
 # The Emerging Serverless Era
 
@@ -305,6 +476,17 @@ func Handler(request events.APIGatewayProxyRequest)
 
 ## Equifax breach (2017)
 
+- 147.8 million private identifying records were exfiltrated
+  - Terrabytes of data
+- Settlement worth $425 million paid out by Equifax
+
+## How did it happen?
+
+1. Entry through a consumer complaint portal using a known, but unpatched vulnerability
+2. Moved to "secure" servers due to lack of segmentation
+3. Unrenewed certificate on Equifax's end let them exfiltrated encrypted data for months
+4. Executives started dumping shares and the breach wasn't publicized for more than a month after discovery
+
 ## PittyTiger is first observed (2017)
 
 - PittyTiger, one of the most recent APTs is first seen
@@ -315,11 +497,57 @@ func Handler(request events.APIGatewayProxyRequest)
 
 ## Crypto Bubble (2021)
 
+- Despite interesting technology and good engineering, there was no real demand
+- Crashed losing multiple billions of dollars for everyone involved
+- Massive fraudsters at FTX at a level not seen since Enron
+
 ## Lastpass Breach (2022)
+
+- First breach in August of '22 
+  - "no customer data was accessed"
+  - Later announced source code and technical information were stolen
+- Later, customer "vaults" were extracted
+  - "a proprietary binary format that contains both unencrypted data...as well as fully-encrypted sensitive fields"
+- Lastpass recommends no updates at this time
+- Security Professionals recommend changing all passwords in Lastpass, enabling 2FA anywhere its available, and migrating to a different password manager
 
 ## SvelteKit (2022)
 
+- Web framework
+- Handles all the major things like auth, routing, distribution, compilation, bundling, etc.
+- Major competitor is Next.js, time will tell which becomes the most common
+
 # Major Trends
+
+## Problems in Software Design
+
+1. Create a product that people have a need for
+2. Create a product that is able to live on
+3. Create a product that protects the people involved with it
+
+## We can make a tool for that!
+
+- When we encounter a problem, it's common for out solution to be, let's build a tool to do that
+- This mirrors the abstraction that comes so naturally to software engineers
+- Abstracting out lower layers leads to multiple assumptions
+
+## Assumptions:
+
+1. Everything works as it's intended to
+2. Security issues at lower levels are handled
+3. We can operate without an explicit understanding of lower layers
+
+## Fact:
+
+1. ~~Everything works as it's intended to~~
+2. ~~Security issues at lower levels are handled~~
+3. ~~We can operate without an explicit understanding of lower layers~~
+
+## Abstraction
+
+Even the concept of a computer undergoes abstraction in our model.
+
+Room sized computing devices -> mainframes -> computers -> servers -> IaaS -> SaaS -> FaaS
 
 # Why Design in Security
 
@@ -333,7 +561,19 @@ func Handler(request events.APIGatewayProxyRequest)
 
 ---
 
-"""
-The attacker used several networks to spoof 167 Mpps (millions of packets per second) to 180,000 exposed CLDAP, DNS, and SMTP servers, which would then send large responses to us. This demonstrates the volumes a well-resourced attacker can achieve: This was four times larger than the record-breaking 623 Gbps attack from the Mirai botnet a year earlier.
-""" 
-over 6 months
+*"The attacker used several networks to spoof 167 Mpps (millions of packets per second) to 180,000 exposed CLDAP, DNS, and SMTP servers, which would then send large responses to us. This demonstrates the volumes a well-resourced attacker can achieve: This was four times larger than the record-breaking 623 Gbps attack from the Mirai botnet a year earlier."* - Google Press Release
+
+---
+
+*"In November [2021], Microsoft mitigated a DDoS attack with a throughput of 3.47 Tbps and a packet rate of 340 million packets per second (pps), targeting an Azure customer in Asia. We believe this to be the largest attack ever reported in history.*
+
+*"This was a distributed attack originating from approximately 10,000 sources and from multiple countries across the globe, including the United States, China, South Korea, Russia, Thailand, India, Vietnam, Iran, Indonesia, and Taiwan. Attack vectors were UDP reflection on port 80 using Simple Service Discovery Protocol (SSDP), Connection-less Lightweight Directory Access Protocol (CLDAP), Domain Name System (DNS), and Network Time Protocol (NTP) comprising one single peak, and the overall attack lasted approximately 15 minutes."* - Azure Press Release
+
+---
+
+1. Attackers are getting more and more capable
+2. Increasing numbers of people are conducting increasingly important tasks online
+3. Malicious actors are incentivized to get in
+4. It only takes one exploit to invalidate any one security
+
+# Questions?
