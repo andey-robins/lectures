@@ -231,18 +231,46 @@ Where `db.getPass(user)` has defined behavior if user is unknown (i.e. returning
 
 How do I know that a file hasn't changed?
 
+How do you know in what ways a file has changed?
+
 ---
 
 - Modification times
 - Permission changes
 - Duplicate copy checks
 - Checksums
+- Backups
+
+## Example: Git 
+
+![An example of a provenance preserving integrity system](./ssd/assets/02/git-diff.png)
 
 ## Availability
 
 **Availability:** You can get what you need when you need it
 
+## What it isn't
+
+Availability doesn't refer to the idea of data being irreparably lost (this would be classified as an integrity issue). 
+
+## Attacks
+
+You'll most commonly see this as a DoS attack. Other examples mentioned in the textbook include:
+
+- Malformed requests
+- Infinte recursion
+- Running out of storage
+- etc.
+
 # The Gold Standard
+
+---
+
+_"The gold standard acts as the enforcement mechanism that protects CIA"_
+
+- Authentication
+- Authorization
+- Auditability
 
 ## Authentication
 
@@ -266,12 +294,35 @@ There are as many ways to authenticate people as there are to identify people
 - What you can do
 - Where you are
 - What you're using
+- What you have
 
----
+## Two Attacks
+
+- Without the knowledge of the principal
+- With the knowledge of the principal
+
+## Without the Principal
+
+When the principal isn't involved, this is some form of subversion of the authentication system. This could be done via phishing, shoulder surfing, or any of the other ways an identity could be compromised that we're familiar with.
+
+## With the Principal
+
+_Example:_ Sharing your Netflix password
 
 ## Authorization
 
 **Authorization:** You should know if the user is allowed to do what they want
+
+## Example: Role Based Access Control
+
+A common way authentication and authorization are done is to use "roles." A system can assign certain permissions to a role (i.e. developers are allowed to read and write to the source code while QA is only allowed to read) and then after authentication, restrict access to only available access based on an assigned role.
+
+## Other Kinds of Restriction
+
+- Time based restrictions
+- Location based restrictions
+- Restrictions on updating authorization
+- Multiple approvals
 
 ## Auditability
 
@@ -291,6 +342,12 @@ Auditability is concerned with being able to address these questions. There are 
 - Good defaults
 - Permissions
 - etc.
+
+## Non-Repudiation 
+
+_Non-repudiation_ is why we should care about auditability even if everyone in a system is trusted (an occurence I struggle to find an example of, meaning even this is likely an overly optimistic situation). 
+
+Non-repudiation is a situation where an actor cannot dispute an action.
 
 # The Rest
 
@@ -343,9 +400,14 @@ _A good defense will have multiple layers_
 
 ## Integrity vs Auditability
 
-## Confidentiality vs Authentication
+Validating integrity will often make use of the principles of auditability. For instance, checking the change log would be making use of audit information to ensure the integrity. The opposite does not necessarily hold. Checking the integrity of a file is not the same as auditing the file.
 
 ## Authentication vs Authorization
+
+These are often handled by the same systems (i.e. RBAC) so the difference can be minute. To re-iterate previous points:
+
+- Authentication is who you are
+- Authorization is what you're allowed to do
 
 # Tradeoffs
 
