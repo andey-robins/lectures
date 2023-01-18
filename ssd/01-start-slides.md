@@ -1,5 +1,5 @@
 % Secure Software Design
-% Andey Robins
+% Andey Robins (They/Them)
 % Spring 23 - Week 1
 
 # Cybersecurity: Secure Software Design
@@ -347,8 +347,6 @@ While the waterfall design methodology had its place, the needs of SaaS business
 - It turns out, pure javascript doesn't integrate with the DOM very well
 - Wouldn't it be nice if there was a tool which allows us to interact with the DOM?
 
-*"Anonymous is tired of corporate interests controlling the internet and silencing the people’s rights to spread information, but more importantly, the right to SHARE with one another. The RIAA and the MPAA feign to aid the artists and their cause; yet they do no such thing. In their eyes is not hope, only dollar signs. Anonymous will not stand this any longer."* - Anonymous
-
 ## First iPhone (2007)
 
 - Did for mobile computing what the Apple ][ did for home computing
@@ -361,6 +359,10 @@ While the waterfall design methodology had its place, the needs of SaaS business
 - First association with hacktivism
   - Previously known basically for being a club on 4chan
 - Began as attacks against the Church of Scientology
+
+---
+
+*"Anonymous is tired of corporate interests controlling the internet and silencing the people’s rights to spread information, but more importantly, the right to SHARE with one another. The RIAA and the MPAA feign to aid the artists and their cause; yet they do no such thing. In their eyes is not hope, only dollar signs. Anonymous will not stand this any longer."* - Anonymous
 
 ## Node (2009)
 
