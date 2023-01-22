@@ -6,11 +6,53 @@
 
 ## Outline
 
+- Assignment Overview
 - What is security?
 - The CIA Triad
 - The Gold Standard
 - The Rest of Security
 - Differences
+
+# Assignments
+
+## Assignments
+
+1. Security Analysis (Written)
+2. Logging (Programming)
+
+## Security Analysis
+
+- Due February 5 @ Midnight
+  - 2 weeks from now
+- Builds foundations for the programming assignment
+- Read Logging assignment before starting
+
+## Logging
+
+- Due February 12 @ Midnight
+  - 3 weeks from now
+- Finish written security analysis before starting
+- Link in the assignment to Git introduction
+- Submission handled through Github
+  - Put the link in WyoCourses
+
+## DeadDrop
+
+A dead drop is a method of espionage tradecraft to pass information between two individuals using a secret location. By avoiding directly meeting or sending information, they can keep their communications secret.
+
+_deaddrop_ is a utility for doing exactly this. Users can leave messages for other users on a single device, effectively sending messages through time instead of space.
+
+## Usage
+
+```bash
+<run> -new -user <username> # create a new user
+<run> -send -user <user to send to>
+<run> -read -user <username>
+```
+
+Where `<run>` is the run command for the language (i.e. `go run main.go` or `cargo run --`)
+
+# Security
 
 ## What is Security About
 
@@ -62,7 +104,7 @@ _When would it be appropriate to trust a piece of malware?_
 
 ## Implicit Trust
 
-- Who has audited their WiFi driver? 
+- Who has audited their WiFi driver?
 - Who takes the time to read through terms and conditions?
 - Who checks the hardware of their CPU?
 
@@ -241,7 +283,7 @@ How do you know in what ways a file has changed?
 - Checksums
 - Backups
 
-## Example: Git 
+## Example: Git
 
 ![An example of a provenance preserving integrity system](./ssd/assets/02/git-diff.png)
 
@@ -251,7 +293,7 @@ How do you know in what ways a file has changed?
 
 ## What it isn't
 
-Availability doesn't refer to the idea of data being irreparably lost (this would be classified as an integrity issue). 
+Availability doesn't refer to the idea of data being irreparably lost (this would be classified as an integrity issue).
 
 ## Attacks
 
@@ -343,9 +385,9 @@ Auditability is concerned with being able to address these questions. There are 
 - Permissions
 - etc.
 
-## Non-Repudiation 
+## Non-Repudiation
 
-_Non-repudiation_ is why we should care about auditability even if everyone in a system is trusted (an occurence I struggle to find an example of, meaning even this is likely an overly optimistic situation). 
+_Non-repudiation_ is why we should care about auditability even if everyone in a system is trusted (an occurence I struggle to find an example of, meaning even this is likely an overly optimistic situation).
 
 Non-repudiation is a situation where an actor cannot dispute an action.
 
@@ -427,7 +469,7 @@ What tradeoffs arise when we consider authentication vs anonymity? In terms of t
 
 ## Integrity vs Availability
 
-*Brainstorm:* How do we ensure integrity?
+_Brainstorm:_ How do we ensure integrity?
 
 ---
 
