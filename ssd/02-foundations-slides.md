@@ -353,7 +353,7 @@ _Example:_ Sharing your Netflix password
 
 ## Authorization
 
-**Authorization:** You should know if the user is allowed to do what they want
+**Authorization:** You should know if a principal is allowed to do what they want
 
 ## Example: Role Based Access Control
 
