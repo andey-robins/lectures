@@ -369,4 +369,126 @@ There's a whole field of study about types and how they relate to programming la
 
 # More about Functions
 
-Coming soon to a classroom near you!
+## More About Functions
+
+- Types of Functions
+  - Fruitful functions
+  - Fruitless functions
+- Turtles!
+
+## Two Types of Functions
+
+_"Fruitful Functions"_ are functions that come back with a value.
+
+_"Fruitless Functions"_ are functions that don't.
+
+In other words, fruitful functions have a `return` and fruitless ones don't.
+
+## Fruitful Function
+
+```python
+def distance(x1, y1, x2, y2):
+    dy = y2 - y1
+    dx = x2 - x1
+    return ((dy ** 2) + (dx ** 2)) ** 0.5
+
+print(distance(0, 0, 4, 3))
+# 5.0
+```
+
+## Fruitless Function
+
+```python
+def show_distance(x1, y1, x2, y2):
+    dy = y2 - y1
+    dx = x2 - x1
+    print("The distance is: ", 
+            ((dy ** 2) + (dx ** 2)) ** 0.5)
+
+print(distance(0, 0, 4, 3))
+# None
+```
+
+## Fruitless Function with `return`
+
+```python
+def show_distance(x1, y1, x2, y2):
+    dy = y2 - y1
+    dx = x2 - x1
+    print("The distance is: ", 
+            ((dy ** 2) + (dx ** 2)) ** 0.5)
+    return
+
+print(distance(0, 0, 4, 3))
+# None
+```
+
+---
+
+![`return` is the statement that gives the output of a function](./1010/reinforcement/assets/01/return.jpeg)
+
+# Questions?
+
+## Turtles
+
+```python
+import turtle
+alex = turtle.Turtle()
+alex.fd(100)
+```
+
+## Right Angles
+
+```python
+alex.fd(100)
+alex.rt(90)
+alex.fd(100)
+```
+
+## Square
+
+```python
+length = 100
+angle = 90
+sam.fd(length)
+sam.rt(angle)
+sam.fd(length)
+sam.rt(angle)
+sam.fd(length)
+sam.rt(angle)
+sam.fd(length)
+sam.rt(angle)
+```
+
+## Square Function
+
+```python
+def square():
+    ######
+    # text from the last slide here
+    ######
+```
+
+---
+
+```python
+def main():
+    square()
+
+main()
+```
+
+## Add An Argument
+
+```python
+def square(length):
+    angle = 90
+    sam.fd(length)
+    sam.rt(angle)
+    sam.fd(length)
+    sam.rt(angle)
+    sam.fd(length)
+    sam.rt(angle)
+    sam.fd(length)
+    sam.rt(angle)
+```
