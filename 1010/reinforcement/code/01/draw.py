@@ -6,7 +6,7 @@ sam = turtle.Turtle()
 def main():
 
     goto_start()
-    square()
+    square(10)
 
     sam.fd(200)
 
@@ -35,9 +35,9 @@ def goto_start():
     sam.lt(180)
 
 
-def square():
-    length = 100
-    angle = 90
+def square(length):
+    length = 150
+    angle = 72
     sam.pd()
     sam.fd(length)
     sam.rt(angle)
@@ -47,6 +47,8 @@ def square():
     sam.rt(angle)
     sam.fd(length)
     sam.rt(angle)
+    sam.fd(length)
+
     sam.pu()
 
 
