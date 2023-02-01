@@ -205,9 +205,9 @@ Caution: Avoid performing specific calculations to assess the threat to an asset
 
 ## Trust vs Privilege
 
-*Privilege* is how much you are able to do.
+_Privilege_ is how much you are able to do.
 
-*Trust* is how much you are expected to be able to do.
+_Trust_ is how much you are expected to be able to do.
 
 ## Identify Trust and Trust Boundaries
 
@@ -232,9 +232,149 @@ Building on the previous section we covered, this should be something we're fami
 
 As a rule, attack surfaces should be minimized. Performing this type of analysis is how we identify susceptible levels of an attack surface. The next step is to assess the risk and mitigate that risk as appropriate.
 
+## Threat Identification
+
+After designating our attack surfaces, threat identification should be the straightforward next step. Anywhere the designated purpose of a system can be subverted can now be identified at appropriate levels.
+
+# Frameworks
+
+## STRIDE
+
+What can be:
+
+- (S)poofed
+- (T)ampered with
+- (R)epudiated
+- (I)nformation disclosed
+- (D)enied service
+- (E)levated privilege
+
+---
+
+- Not a methodology
+  - More apt: A _taxonomy_
+
+## Mapping Stride
+
+| Objective       | Threat                 |
+| --------------- | ---------------------- |
+| Authenticity    | Spoofing               |
+| Integrity       | Tampering              |
+| Auditability    | Repudiation            |
+| Confidentiality | Information Disclosure |
+| Availability    | Denial of Service      |
+| Authorization   | Elevation of Privilege |
+
+## More Examples
+
+Threat modeling examples in the textbook:
+
+- Bank Vault (pg. 33)
+- Vegas Casino (pg. 37)
+- sshd (pg. 31)
+  - This example also covers the idea of trust boundaries
+
 # Risk
 
+## Types of Risk
+
+- Financial
+  - This will cost us money
+- Disclosure
+  - This will reveal confidential info
+- Reputation
+  - This will harm our reputation
+- Legal
+  - This will open us to legal liability
+- Physical
+  - This could impact physical assets
+- Privacy
+  - This could compromise privacy
+
+## Responses to Risk
+
+- Assume the risk
+- Transfer the risk
+- Offload the risk
+
+## Transfer vs Offload
+
+More coming in our section on mitigation
+
+- Transfer
+  - Insurance
+  - Pay a provider
+- Offload
+  - Disclose
+  - Delegate the risk to someone else
+
+## Aside: Presenting Risk
+
+Our task will rarely be to make the final say on how to address some form of risk, as engineers, we're more likely going to need to lay out the risks and hand the decision over to the stakeholders. Presenting this risk is therefore a very important job of ours.
+
+## Outline These
+
+- How the risk appears
+- What has been done to mitigate it
+- Why it can't be reduced further
+- What would be needed to change the situation
+- Who this impacts
+- The potential outcomes
+- A categorical likelihood of each outcome
+
+## Risk and Privacy
+
+Taking on user data creates a risk of that data being disclosed. Kohnfelder says these fit into different types of consideration. We can also lump this under the security blanket of Confidentiality. Be aware, this is likely where any form of legal requirements are needed.
+
 # Mitigation and Prevention
+
+## Mitigation
+
+**Mitigation** is the natural response to a world in which risk is guaranteed, but must be minimized. It is the methods by which we attempt to decrease the potential impact of a risk.
+
+## Threat Mitigation
+
+1. Redesign or further defend to reduce the degree of harm presented by a threat
+2. Remove the threatened asset
+3. Transfer the risk to another group
+4. Assume the risk
+
+## Redesign
+
+This is the primary focus of our course, how to do this.
+
+Additionally, this may be the only thing in your control as an engineer.
+
+## Remove
+
+If an asset presents more risk than value, the decision may be made to discard the asset.
+
+- Customer health data
+- Tracking information
+- Foreign servers
+
+## Transfer
+
+- Insurance
+- Service providers
+- Outsourcing
+
+## Assume
+
+Some threats don't need to be addressed. They may fall into the category of problems that we believe are okay to accept.
+
+- Aliens
+- Acts of God
+- "Cost of doing business"
+
+## Goals of Mitigation
+
+- Make harm less likely to occur
+- Make harm less severe
+- Make harm possible to undo
+- Make it obvious harm has occured
+
+# Strategies for Mitigation
 
 # Example Threat Modeling of Software
 
