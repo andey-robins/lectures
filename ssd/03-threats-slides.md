@@ -376,11 +376,255 @@ Some threats don't need to be addressed. They may fall into the category of prob
 
 # Strategies for Mitigation
 
-# Example Threat Modeling of Software
+## Minimize Attack Surfaces
+
+This is the turtle. Harden the "outer shell."
+
+- Move functionality "behind the walls"
+- Minimize privilege escalation
+- DevOps reduction
+
+## Migrate Functionality
+
+If we consider every endpoint on a webserver as a "surface" which can be attacked by those who can view it, we can minimize (in other words mitigate their threat) by moving them out to the edge or put them behind some protection.
+
+- Do extra calculation/processing on the edge
+  - Perhaps query the raw data and do the processing there instead of having multiple different processing endpoints you could invoke
+- Put queries behind a level of authentication
+  - Require the standard `Bearer ...` token schema which is caught by middleware
+
+## Needed Escalation
+
+If we consider an escalation as necessary in some instances, minimize the amount of work done by an escalated agent.
+
+- Don't run `sudo` on every command
+- Refer to `sshd` from Chapter 2.
+
+## DevOps Work
+
+In the DevOps toolkit are a number of ways to reduce the potential attack surfaces.
+
+- Firewalls and filtering
+- SIEM (Security Information and Event Management)
+- Isolation
+- DMZs and Asset Segregation
+
+## Scoping
+
+We're drawing the line here for the most part. Operations is its own problem which requires major investment and design just like the design of secure software requires major invesment and design. A few of the most prevalent Operations tools are mentioned because they can largely be assumed as present when designing software for running on the network, but as always there are tradeoffs and as always there are reasons to change plans or move the responsibitity from Ops to Design or vice-versa.
+
+## Narrow Windows of Vulnerability
+
+Similar to minimizing attack surfaces, instead about minimizing attack time.
+
+- Perform error checking/type checking before invoking privileged code to ensure as little time as possible is spent in a privileged environment
+- See previous discussion on locking time windows
+
+## CAS
+
+_Code Access Security_ is a model which allows certain levels of privilege to be asserted and reverted from code before running specific aspects of code. Developed by the .NET v1.0 team (including Kohnfelder)
+
+## Minimize Data Exposure
+
+Limit the lifetime of data in memory or even in storage.
+
+## Memory Vulnerabilities
+
+Refer back to our discussion on Heartbleed for discussion on this class of issues.
+
+Their existence is what has led to the idea of memory safe languages.
 
 ---
+
+![The NSA announcement on using memory safe programming languages](./ssd/assets/03/nsa.png)
+
+## User Deleting an Account Example
+
+We run a system with user accounts which allow for the user to delete their account. Consider the following work flow:
+
+1. User wants to delete their account
+2. User deletes their account
+3. Wait, actually I did that on accident
+
+## Mark for Deletion
+
+1. User deletes their account
+2. Account is not deleted for 30 days, instead just being marked for deletion
+3. Email goes out to everyone with accounts announcing new feature
+4. User is confused because they thought their account was gone
+
+## The Recommended Solution
+
+1. User deletes their account
+2. Push user account to separate, "deleted" database to be removed in 30 days
+3. Delete the user from the standard database
+
+Problems with this approach?
+
+# Applications of Mitigation
+
+## Access Policy
+
+1. Start with a set of access needs
+2. Design an ideal policy
+3. Identify available options
+4. Identify limits
+5. Implement policy
+
+## Limits
+
+Our application is a customer sales rep data collectino. There is information about who buys what and how much they spend for sales agents to sell further to the clients.
+
+- One of our largest perceived threats is our customer data being leaked to a competitor
+- Data being exfiltrated from a third party
+- Data being exfiltrated by an insider (i.e. a sales rep)
+
+---
+
+Therefore, we want to limit access to the database to only a certain number of our customers per day
+
+- 100 lookups max (i.e. new fiscal year)
+- 20 lookups on average
+- 10 lookups min
+
+What is the number we should use for our access policy?
+
+## Problems with 100
+
+If there are only a few days out of the year, this leaves us with a larger attack surface. If we ignored the days that we have a spike in usage, this would be overkill.
+
+## Problems with 20
+
+The few max lookup days, which were probably already difficult days on the job, are now even more difficult because the policy gets in the way of people doing work.
+
+## Problems with 10
+
+As can likely be assumed, this makes the every day job of people very difficult. This is a perfect example of sacrificing availability for confidentiality.
+
+## The Relief Valve
+
+A possible means to mitigate the restrictions of this system are a way to temporarily elevate permission levels with a reason.
+
+```
+sudo apt update
+```
+
+Something which takes control over the machine, elevating permissions, for a specific purpose provided some small level of authorization.
+
+---
+
+Alternatively, a system which allows for restrictions to be set based on some other metric. For instance, if we see way more calls coming in, continue increasing the limit until the influx of callers subsides.
+
+---
+
+Our solution which allows for elevation with reasoning allows very easy auditability. Further, we can update the policy if we see more and more overrides coming through that we judge to be legitimate.
+
+## Interfaces
+
+![A software layout presented via UML](./ssd/assets/03/uml.png)
+
+## Trust Boundary and Information Flow
+
+Each interface is the "bottleneck" of information flow. It's very easy to determine which interfaces carry different levels of privileged information and focus responses on them.
+
+---
+
+Three different interfaces:
+
+- Login interface which needs to authenticate with username and password
+- Profile update interface which carries modifications to user settings/data
+- Webpage `get` interface
+
+---
+
+From these three interfaces, it's easy to understand which should have attack surfaces mitigated first.
+
+- Login
+  - Ensure encrypted transmission
+  - Temporarily store, salt, and hash the password
+  - Immediately discard
+    - Clean up memory in a safe way
+
+## Network Interfaces
+
+- gRPC
+- HTTP/S
+- GraphQL
+- REST/CRUD
+
+---
+
+1. Use encrypted transfer over HTTPS
+2. Rely on a CA for signing/trust
+3. Don't reinvent the wheel
+
+## Communication
+
+- Air-gapped devices are virtually non-existent
+- Everything has the network as a potential attack surface
+  - and potentially also the underlying device
+- The wire is also an attack vector
+- Fact of communication always visible
+
+## Storage
+
+Storage of sensitive data is "much like communications because storing data is like communicating it with the future."
+
+- Storage medium is the "wire"
+- Larger window for vulnerability
+
+## Backups
+
+Different data needs backed up in different ways. When should we back up:
+
+- our local gitlab instance?
+- the slack server?
+- our encryption and signing keys?
+- our website log files?
+- our payment processing log files?
+- our user database?
+
+## 3-2-1 Backup Rule
+
+- There should be 3 copies of the data
+- It should be on 2 different media
+- At least 1 copy should be offsite
+
+---
+
+Returning to the sales rep application example.
+
+1. Production DB
+2. Onsite backup
+3. Deep storage
+
+## Storage is Dirt Cheap
+
+![AWS S3 Glacial Storage](./ssd/assets/03/storage.png)
+
+## Physical Media
+
+On the subject of backups, the physical media is a real, meaningful problem that must be addressed.
+
+- degradation
+- availability
+- obsolecense
+
+## Storage Tradeoff
+
+_"[Data storage] is a fundamental tradeoff that requires you to weigh the risks of data loss against the risk of leaks."_ - Kohnfelder (pg. 51)
+
+## Final Takeaways About Threats
 
 1. Identify attack surfaces
 2. Model threats on the system
 3. Assess risk posed by attacks
 4. Mitigate and prevent where possible
+
+# Questions?
+
+## Next Time
+
+- Attacking Systems
+- Finding Vulnerabilities in Code
+- Finding Vulnerabilities in Design
