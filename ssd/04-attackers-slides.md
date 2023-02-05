@@ -8,7 +8,7 @@
 
 - Famous Cyberattacks and Their Mitigation
 - Finding Vulnerabilities
-- Building Attack Chains
+- Finding Bugs and Vulnerabilities on `deaddrop`
 
 # Cyberattacks
 
@@ -423,6 +423,10 @@ They just disabled JNDI lookup.
 
 # Finding Vulnerabilities
 
+## Finding Vulnerabilities
+
+While this isn't the primary goal of our course, as a Cybersecurity topics course, it seems wrong not to discuss some basic approaches to finding vulnerabilities.
+
 ## Penetration Testing
 
 ## QA Testing
@@ -432,5 +436,3 @@ They just disabled JNDI lookup.
 ## Code Analysis
 
 ## Taint Analysis
-
-# Constructing Attack Chains
