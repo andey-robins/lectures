@@ -227,7 +227,7 @@ Each call to `SSLHashSha1.update` must match an expected value to properly authe
 ```c
 if ((err = SSLHashSha1.update(&hashCtx, &clientRandom)) != 0)
     goto fail;
-if ((err = SSLHashSha1.update(&hashCtx, &clientRandom)) != 0)
+if ((err = SSLHashSha1.update(&hashCtx, &serverRandom)) != 0)
     goto fail;
     goto fail;
 if ((err = SSLHashSha1.update(&hashCtx, &signedParams)) != 0)
@@ -244,7 +244,7 @@ fail:
 ## The Problem: Structure by Syntax
 
 ```c
-if ((err = SSLHashSha1.update(&hashCtx, &clientRandom)) != 0)
+if ((err = SSLHashSha1.update(&hashCtx, &serverRandom)) != 0)
     goto fail;
     goto fail;
 ```
@@ -421,6 +421,111 @@ They just disabled JNDI lookup.
 
 **Takeaway:** Don't include extra features unless there is a demand and a clear reason to allow it.
 
+# Threat Modeling `deaddrop`
+
+## Confidentiality
+
+First, we'll identify the key assets we wish to ensure confidentiality of:
+
+1. Users
+2. Messages
+3. Database
+
+## Users
+
+Protecting the existence of users is an interesting question, and there are reasons for hiding whether a user exists and not.
+
+### Hiding a User
+
+- In a subterfuge environment this can also be important
+- Potential to mistype a user name and not know
+
+### Informing about Users
+
+- Leaks usernames through side channel
+- Better UX
+
+## Messages
+
+Ideally, messages would only be readable by the person who sent the message and the recipient. this would require some degree of PKI and Crypto. For now, let's say that this isn't a major concern of ours, and we'll re-visit it later.
+
+## Database
+
+The database file can simply be read as is.
+
+---
+
+![Accessing the un-encrypted DB](./ssd/assets/04/sqlite.png)
+
+## Threats
+
+- Brute forcing a password
+- Brute forcing usernames
+- Exfiltrating/reading the database
+
+## Integrity
+
+Once again, let's look at the assets we care about the integrity of:
+
+- Users
+- Messages
+- Database
+- Code
+
+## Users
+
+Since the database is writeable, we could replace a users password with a different hash to impersonate them and lock them out.
+
+This could also be considered an issue with authentication and availability.
+
+## Messages
+
+Messages can be arbitrarily tampered with.
+
+## Database
+
+I can drop in replace a new database and who's to be the wiser? I can arbitrarily modify the DB and who would notice?
+
+## Code
+
+What if someone modified our utility (i.e. shimmed it)?
+
+## Availability
+
+Once again, let's look at the assets we care about the availability of:
+
+- Users
+- Messages
+- Database
+
+## Messages
+
+One more threat: A flood of misinformation making legitimate messages not easily navailable.
+
+## Mitigations
+
+Beginning with enumerating some of our modeled threats:
+
+1. Some threat to the database file as a result of it being unencrypted
+2. Malicious/misleading messages
+3. Shims
+4. Attribution of Messages
+
+We can begin by prioritizing number (1) since many of the issues we previously identified were caused by this as the underlying attack vector.
+
+## Performing Mitigation
+
+TBA: After you have the chance to perform your own mitigations. We'll circle back around and talk about specific mitigations. I'll share some clever one's from y'all too!
+
+## Gold Standard
+
+1. Authentication
+    - primarily threatened by shimming, bcrypt is a standard
+2. Authorization
+    - Worth having a discussion on if we need to authorize message sending
+3. Auditability
+    - Another one mostly addressed by a coming assignment (to be discussed later)
+
 # Finding Vulnerabilities
 
 ## Finding Vulnerabilities
@@ -429,10 +534,52 @@ While this isn't the primary goal of our course, as a Cybersecurity topics cours
 
 ## Penetration Testing
 
+**Penetration Testing** is the process of attacking an active system with the goal of determining weakened attack surfaces and providing advice for mitigation.
+
+### Learn With
+
+- [Try Hack Me](https://tryhackme.com/)
+- [Hack the Box](https://www.hackthebox.com/)
+- [National Cyberl League](https://nationalcyberleague.org/)
+
 ## QA Testing
+
+**QA Testing** is the process of ensuring the quality and usability of your software before release or publication.
+
+### Learn With
+
+- [https://www.guru99.com/software-testing.html](https://www.guru99.com/software-testing.html)
 
 ## TDD
 
+**TDD** or **Test Driven Development** is the process of using tests as the fundamental building block of software. Code is only written to pass failing tests and tests are only written when all other tests are passing.
+
+### Learn With
+
+- [Uncle Bob](http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd)
+- [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+
 ## Code Analysis
 
+**Code Analysis** is the process of using automated tools to analyze the security and problems of code. Examples include static code analysis.
+
+### Learn With
+
+- Practice
+- Go get a SCA tool and a repo and start looking at the results
+
 ## Taint Analysis
+
+**Taint Analysis** is the process of analyzing which pieces of data impact which other pieces of data.
+
+### Learn With
+ - [Practical Binary Analysis](https://www.amazon.com/Practical-Binary-Analysis-Instrumentation-Disassembly/dp/1593279124/ref=sr_1_1?crid=2G8VFVKDF08U1&keywords=practical+binary+analysis&qid=1675825324&s=books&sprefix=practical+binary+analys%2Cstripbooks%2C187&sr=1-1)
+
+# Questions?
+
+## Next Time
+
+- Cryptography!
+- First 5010 Supplemental Lecture
+  - Crypto Proofs of Correctness
+  - Discussion Boards
