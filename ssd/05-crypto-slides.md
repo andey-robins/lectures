@@ -142,8 +142,31 @@ Pepper - Added by the "user," useful for redundancy or in low trust environments
 
 # Symmetric Encryption
 
+## Symmetric Key Encryption
+
+Both principles have the same key and perform the same operations to encrypt and decrypt the information. Due to the similarity and equivalent actions, we call this symmetric encryption.
+
+## One Time Pad
+
+There is only one value for _K_, even though ideally there would be a way for us to 
+$$ C = P \oplus K $$
+
+Which decrypts due to the following rule:
+
+$$ C \oplus K = K \oplus K \oplus P = P $$
+
+---
+
+![Concrete example of one time pad encryption](./ssd/assets/05/otp.png)
+
 # Asymmetric Encryption
 
+
+## Why Use Asymmetric or Symmetric Encryption?
+
+- Asymmetric involves less trust of both parties
+- Symmetric is faster and usually easier to use
+  
 ## Diffie-Helman Key Exchange
 
 ## RSA
