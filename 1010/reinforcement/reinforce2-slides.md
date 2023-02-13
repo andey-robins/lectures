@@ -1,6 +1,6 @@
 % Repetition & Reinforcement
 % Dr Borowczak & Andey Robins
-% September 20-22, 2022
+% February 14-16, 2023
 
 ## Quest Schedules
 
@@ -28,7 +28,7 @@ Consider this code snippet from Lab 3.
 ```python
 n = 6
 
-if n % 2 == 0:
+if is_even(n):
   n = even_collatz(n)
 else:
   n = odd_collatz(n)
@@ -254,205 +254,6 @@ I'll begin using these operators for clarity, you may continue using the expande
 
 # Questions?
 
-# Reinforcement
-
-## Topics for Reinforcement
-
-- `if`
-- `if ... else`
-- `while` loops
-
----
-
-We'll be reinforcing our understanding of these concepts by *refactoring* and expanding the text adventure game we began in the last week of reinforcement lectures.
-
-The complete code we had last week is available in `last.py`
-
-The revisions we'll discuss today are available in `main.py`. 
-
-You can also run these scripts from the terminal using `python3 <filename>` where `<filename>` is replaced with the name of the file, such as `main.py`
-
-## Loop Refactoring
-
-```python
-def game_loop():
-  """
-  This is the main driver function. 
-  We'll update this in the future
-  """
-  while True:
-    action = prompt("What do you do?", 
-                PLAYER_GOLD, PLAYER_HEALTH)
-    act(action)
-```
-
-This has an infinite loop! And we know those aren't great, so let's fix that.
-
----
-
-First, we'll create a new global variable called `CONTINUE` and set its value to `True`
-
-`CONTINUE = True`
-
-Then we can put that in for our **loop condition**
-```python
-def game_loop():
-  while CONTINUE:
-    action = prompt("What do you do?", 
-              PLAYER_GOLD, PLAYER_HEALTH)
-    act(action)
-```
-
----
-
-Now, we'll update the `act()` function to change `CONTINUE` to `False` when we want to exit the game.
-
-```python
-def act(action):
-  global CONTINUE
-  ...
-  elif action == "Q" or action == "q":
-    CONTINUE = False
-  ...
-  else:
-    print("Sorry, I don't understand.")
-```
-
-Now when we try to exit the game, it will update our variable `CONTINUE` and stop running.
-
-## Adding Attacks
-
-This is currently our attack function:
-
-```python
-def attack():
-  global PLAYER_HEALTH, MONSTER_HEALTH
-  PLAYER_HEALTH = PLAYER_HEALTH - MONSTER_DAMAGE
-  MONSTER_HEALTH = MONSTER_HEALTH - PLAYER_DAMAGE
-  print("You did", PLAYER_DAMAGE, "damage.")
-  print("The monster did", MONSTER_DAMAGE, "damage.")
-```
-
----
-
-Let's refactor with our update operators
-```python
-def attack():
-  global PLAYER_HEALTH, MONSTER_HEALTH
-  PLAYER_HEALTH -= MONSTER_DAMAGE
-  MONSTER_HEALTH -= PLAYER_DAMAGE
-  print("You did", PLAYER_DAMAGE, "damage.")
-  print("The monster did", MONSTER_DAMAGE, "damage.")
-```
-
-## Attack Types
-
-I want to have two kinds of attacks: physical and magical.
-
-To do that, we'll need to get some input from the player and change how much damage we do with each type of attack.
-
-```python
-attack_type = input("Enter m for a magic attack, 
-                    p for a physical attack. > ")
-```
-
----
-
-Then we can check the `attack_type` in an `if...else` statement.
-
-```python
-player_damage = 0
-if attack_type == "m" or attack_type == "M":
-  player_damage = 5
-else:
-  player_damage = 2
-```
-
----
-
-And then we can update the later code in the function like so:
-```python
-PLAYER_HEALTH -= MONSTER_DAMAGE
-MONSTER_HEALTH -= player_damage
-print("You did", player_damage, "damage.")
-print("The monster did", MONSTER_DAMAGE, "damage.")
-```
-
----
-
-Obviously with the code as it is right now, there's no reason for a player not to use a magic attack; so let's add some Magic Points (MP) that can run out.
-
-First, we'll create a global variable:
-
-`PLAYER_MP = 10`
-
-and access that global variable in our `attack()` function.
-
-`global PLAYER_HEALTH, MONSTER_HEALTH, PLAYER_MP`
-
----
-
-Now, if the player makes a magic attack, we will take away 3 MP.
-
-We make use of our update operators to make it a little less verbose.
-
-```python
-if attack_type == "m" or attack_type == "M":
-  player_damage = 5
-  PLAYER_MP -= 3
-else:
-  player_damage = 2
-```
-
----
-
-Finally, we want to prevent the player from using a magic attack if they don't have enough MP.
-
-That is easy enough to check with an `if` statement. If they don't have enough magic, we will alert them and ask them to pick another action. What would this look like?
-
-## Where does this code belong?
-
-```python
-if PLAYER_MP < 3:
-  print("You don't have enough MP to do that.")
-  return
-```
-
-
----
-
-```python
-def attack():
-  global PLAYER_HEALTH, MONSTER_HEALTH, PLAYER_MP
-  attack_type = input("Enter m for a magic attack, 
-                      p for a physical attack. > ")
-  player_damage = 0
-  if attack_type == "m" or attack_type == "M":
-    if PLAYER_MP < 3:
-      print("You don't have enough MP to do that.")
-      return
-    PLAYER_MP -= 3
-    player_damage = 5
-  else:
-    player_damage = 2
-  PLAYER_HEALTH -= MONSTER_DAMAGE
-  MONSTER_HEALTH -= player_damage
-  print("You did", player_damage, "damage.")
-  print("The monster did", MONSTER_DAMAGE, "damage.")
-```
-
----
-
-That's where we'll leave the game for today. It's still a little ways from truly being called a "game" but we'll continue to build it up during the next extension week. There are some extensions for features you can add in right now if you want to keep hacking away at it. If you don't want to try it on your own, don't worry, I'll provide the code for those features next time we return to this project.
-
-## Extensions
-
-Looking for extra things to do to extend the game before the next time we talk about it? Try some or all of these!
-
-1. Add a way for the player to recover MP
-2. Check if the player dies, and add a message telling them to start over
-3. Lock the door of the room until the player kills the monster
-
 # Problem Solving with Python
 
 ## What's the end goal?
@@ -485,11 +286,11 @@ There are a number of great online places where you can find interesting program
 
 ---
 
-![The Project Euler home page](euler.png)
+![The Project Euler home page](./1010/reinforcement/assets/02/project-euler.png)
 
 ## Problem 1
 
-![The problem we'll be approaching today](problem.png)
+![Today's problem](./1010/reinforcement/assets/02/problem1.png)
 
 ## Breaking it up
 
@@ -720,7 +521,7 @@ Going back to `1_000` -> `233168`
 
 ---
 
-![The correct solution to the problem](solution.png)
+![The correct solution to the problem](./1010/reinforcement/assets/02/solution.png)
 
 ## Problem solving steps
 
@@ -729,4 +530,198 @@ Going back to `1_000` -> `233168`
 3. Repeat until each piece seems trivial
 4. Combine the pieces until you arrive at the complete solution
 
-# Questions
+# Questions?
+<!-- 
+---
+
+We'll be reinforcing our understanding of these concepts by *refactoring* and expanding the text adventure game we began in the last week of reinforcement lectures.
+
+The complete code we had last week is available in `last.py`
+
+The revisions we'll discuss today are available in `main.py`. 
+
+You can also run these scripts from the terminal using `python3 <filename>` where `<filename>` is replaced with the name of the file, such as `main.py`
+
+## Loop Refactoring
+
+```python
+def game_loop():
+  """
+  This is the main driver function. 
+  We'll update this in the future
+  """
+  while True:
+    action = prompt("What do you do?", 
+                PLAYER_GOLD, PLAYER_HEALTH)
+    act(action)
+```
+
+This has an infinite loop! And we know those aren't great, so let's fix that.
+
+---
+
+First, we'll create a new global variable called `CONTINUE` and set its value to `True`
+
+`CONTINUE = True`
+
+Then we can put that in for our **loop condition**
+```python
+def game_loop():
+  while CONTINUE:
+    action = prompt("What do you do?", 
+              PLAYER_GOLD, PLAYER_HEALTH)
+    act(action)
+```
+
+---
+
+Now, we'll update the `act()` function to change `CONTINUE` to `False` when we want to exit the game.
+
+```python
+def act(action):
+  global CONTINUE
+  ...
+  elif action == "Q" or action == "q":
+    CONTINUE = False
+  ...
+  else:
+    print("Sorry, I don't understand.")
+```
+
+Now when we try to exit the game, it will update our variable `CONTINUE` and stop running.
+
+## Adding Attacks
+
+This is currently our attack function:
+
+```python
+def attack():
+  global PLAYER_HEALTH, MONSTER_HEALTH
+  PLAYER_HEALTH = PLAYER_HEALTH - MONSTER_DAMAGE
+  MONSTER_HEALTH = MONSTER_HEALTH - PLAYER_DAMAGE
+  print("You did", PLAYER_DAMAGE, "damage.")
+  print("The monster did", MONSTER_DAMAGE, "damage.")
+```
+
+---
+
+Let's refactor with our update operators
+```python
+def attack():
+  global PLAYER_HEALTH, MONSTER_HEALTH
+  PLAYER_HEALTH -= MONSTER_DAMAGE
+  MONSTER_HEALTH -= PLAYER_DAMAGE
+  print("You did", PLAYER_DAMAGE, "damage.")
+  print("The monster did", MONSTER_DAMAGE, "damage.")
+```
+
+## Attack Types
+
+I want to have two kinds of attacks: physical and magical.
+
+To do that, we'll need to get some input from the player and change how much damage we do with each type of attack.
+
+```python
+attack_type = input("Enter m for a magic attack, 
+                    p for a physical attack. > ")
+```
+
+---
+
+Then we can check the `attack_type` in an `if...else` statement.
+
+```python
+player_damage = 0
+if attack_type == "m" or attack_type == "M":
+  player_damage = 5
+else:
+  player_damage = 2
+```
+
+---
+
+And then we can update the later code in the function like so:
+```python
+PLAYER_HEALTH -= MONSTER_DAMAGE
+MONSTER_HEALTH -= player_damage
+print("You did", player_damage, "damage.")
+print("The monster did", MONSTER_DAMAGE, "damage.")
+```
+
+---
+
+Obviously with the code as it is right now, there's no reason for a player not to use a magic attack; so let's add some Magic Points (MP) that can run out.
+
+First, we'll create a global variable:
+
+`PLAYER_MP = 10`
+
+and access that global variable in our `attack()` function.
+
+`global PLAYER_HEALTH, MONSTER_HEALTH, PLAYER_MP`
+
+---
+
+Now, if the player makes a magic attack, we will take away 3 MP.
+
+We make use of our update operators to make it a little less verbose.
+
+```python
+if attack_type == "m" or attack_type == "M":
+  player_damage = 5
+  PLAYER_MP -= 3
+else:
+  player_damage = 2
+```
+
+---
+
+Finally, we want to prevent the player from using a magic attack if they don't have enough MP.
+
+That is easy enough to check with an `if` statement. If they don't have enough magic, we will alert them and ask them to pick another action. What would this look like?
+
+## Where does this code belong?
+
+```python
+if PLAYER_MP < 3:
+  print("You don't have enough MP to do that.")
+  return
+```
+
+
+---
+
+```python
+def attack():
+  global PLAYER_HEALTH, MONSTER_HEALTH, PLAYER_MP
+  attack_type = input("Enter m for a magic attack, 
+                      p for a physical attack. > ")
+  player_damage = 0
+  if attack_type == "m" or attack_type == "M":
+    if PLAYER_MP < 3:
+      print("You don't have enough MP to do that.")
+      return
+    PLAYER_MP -= 3
+    player_damage = 5
+  else:
+    player_damage = 2
+  PLAYER_HEALTH -= MONSTER_DAMAGE
+  MONSTER_HEALTH -= player_damage
+  print("You did", player_damage, "damage.")
+  print("The monster did", MONSTER_DAMAGE, "damage.")
+```
+
+---
+
+That's where we'll leave the game for today. It's still a little ways from truly being called a "game" but we'll continue to build it up during the next extension week. There are some extensions for features you can add in right now if you want to keep hacking away at it. If you don't want to try it on your own, don't worry, I'll provide the code for those features next time we return to this project.
+
+## Extensions
+
+Looking for extra things to do to extend the game before the next time we talk about it? Try some or all of these!
+
+1. Add a way for the player to recover MP
+2. Check if the player dies, and add a message telling them to start over
+3. Lock the door of the room until the player kills the monster
+
+
+# Questions -->
