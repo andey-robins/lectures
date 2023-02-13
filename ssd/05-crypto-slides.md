@@ -4,6 +4,10 @@
 
 # Cryptography
 
+## Cryptography
+
+**Cryptography** is a set of mathematical tools we use to ensure the security of information in a hostile environment.
+
 ## Outline
 
 - Cryptographic Primitives
@@ -142,6 +146,11 @@ Pepper - Added by the "user," useful for redundancy or in low trust environments
 
 # Symmetric Encryption
 
+## Encryption Definitions
+
+- **Plaintext** is the message to be encrypted, in other words, the original message
+- **Ciphertext** is the encrypted message. This is illegible.
+
 ## Symmetric Key Encryption
 
 Both principles have the same key and perform the same operations to encrypt and decrypt the information. Due to the similarity and equivalent actions, we call this symmetric encryption.
@@ -158,6 +167,48 @@ $$ C \oplus K = K \oplus K \oplus P = P $$
 ---
 
 ![Concrete example of one time pad encryption](./ssd/assets/05/otp.png)
+
+## AES
+
+AES is the default "work horse" of the encryption world. It's what is referred to as a _block cipher_. A long message is broken up into pieces, or blocks, and these blocks are then encrypted.
+
+The same key is used for encryption and decryption.
+
+## Problem: Replay Attacks
+
+If I encrypt the text "We attack at dawn. Come in on their west flank," what prevents this message from being repeated in the future?
+
+---
+
+Change our message to: "We attack at dawn on 6/6/44. Come in on their west flank."
+
+Now this message has some means to check whether it becomes invalidated with time, but you could still wait a century and re-use the message to potentially dangerous outcomes.
+
+We need some value that will be guaranteed to be only used once. A _nonce_.
+
+## AES Modes
+
+- Galois/Counter Mode (GCM)
+  - Good for parallelization
+- Counter with Cipher block chaining message authentication code Mode (CCM)
+  - Accounts for both authentication and confidentiality
+- Synthetic Initialization Vector mode (SIV)
+  - Nonce-misuse resistant
+- AES-GCM-SIV
+  - Combines GCM mode with nonce resistance
+- Electronic Code Book mode (ECB)
+  - Susceptible to replay attacks
+  - Largely just insecure
+- Cipher Block Chaining mode (CBC)
+  - Sequential encryption
+
+---
+
+![Visualization of ECB Mode](./ssd/assets/05/Tux-ECB.png)
+
+---
+
+![CBC Mode AES Encryption (invented 1976)](./ssd/assets/05/block-cipher.png)
 
 # Asymmetric Encryption
 
