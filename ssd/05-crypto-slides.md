@@ -211,26 +211,83 @@ We need some value that will be guaranteed to be only used once. A _nonce_.
 ![CBC Mode AES Encryption (invented 1976)](./ssd/assets/05/block-cipher.png)
 
 # Asymmetric Encryption
+  
+## Diffie-Helman Key Exchange
 
+Revolutionary way to establish a shared secret in a public channel.
+
+"DH works its magic by combining either public value with the other private value, such that the result is the same in both cases."
+
+Requires the generation of "safe" primes. 
+
+`time openssl dhparam 2048` vs `time openssl genrsa 2048`
+
+## RSA
+
+RSA was one of the first asymmetric, public-key cryptosystems. First published in 1977, emerged the year after the Diffie-Helman key exchange algorithm was published.
+
+Since it relies on the hardness of factoring, it's not quantum-proof.
+
+## Elliptic Curve
+
+Current best level of encryption, relies on the difficulty of the discrete-logarithm problem. Functions through math on prime curves in these logarithmic fields.
+
+A different class of algorithms, which operates on a subset of mathemtical objects, many of which are quantum resistant.
+
+## NIST vs Curve25519
+
+The NIST curve P-256 has an equation:
+
+$$ y^2 = x^3 - 3x + b $$
+
+where _b_ is a 256 bit number. (Similar curves exist for 192, 224, 384, aand 521 bit prime curves as well.)
+
+Curve25519 has form:
+
+$$ y^2 = x^3 + 486662x^2 + x $$
+
+Nobody disputes 25519, there are concerns about using P-256. There's a reason, Chrome, Apple systems, and OpenSSH use 25519.
 
 ## Why Use Asymmetric or Symmetric Encryption?
 
 - Asymmetric involves less trust of both parties
 - Symmetric is faster and usually easier to use
-  
-## Diffie-Helman Key Exchange
 
-## RSA
+# Key Derivation Functions
 
-## Elliptic Curve
+## KDFs
 
-## NIST Curve Controvery
+An algorithm which dervies one or more secret keys from a secret.
 
-# Key Derivation Algorithms
+Two major uses:
+1. Padding keys to required length
+2. Converting form of secrets
 
-# Signing
+## A subset of hashing
 
-# CAs and Certificates
+KDFs are usually some form of a keyed hash. They therefore leverage many of the techniques we learn about with hashing.
+
+## Applications for Encryption
+
+A common application is to use a KDF after DH to create a symmetric secret.
+
+- An alternative option in this scenario would of course also be using DH to encrypt a secret, sharing it, and then using it
+
+## Signing
+
+Signing is authentication with encryption or with hashing. It's usually discussed on top of either a hash or encryption algorithm. Using the same principles (and in many cases similarly named algorithms) as our previous cryptographic systems.
+
+![Ubuntu checksums and signatures](./ssd/assets/05/ubuntu.png)
+
+## CAs and Certificates
+
+**Certificate Authorities** are groups which are largely granted trust and we trust to sign the certificates and authorize/authenticate other principles in the net. 
+
+**Certificates** are the digital signatures they sign out. It's basically just like any form of ID, but backed by a cryptographic identity.
+
+---
+
+![YouTube certificate as of 2/14/23](./ssd/assets/05/certificate.png)
 
 # Questions?
 
@@ -238,4 +295,4 @@ We need some value that will be guaranteed to be only used once. A _nonce_.
 
 This wraps up our fundamentals of cybersecurity.
 
-- Security Design Patterns
+Next are Security Design Patterns
