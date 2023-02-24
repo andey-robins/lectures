@@ -465,3 +465,192 @@ Operate on a system where both people assume the mantle for security. This leads
 ## Next Time
 
 We talk about the "Traditional Design Patterns" and showcase some design pattern code.
+
+# Logging Assignment Retrospective
+
+## Languages
+
+| Language | Repos |
+| -------- | ----- | 
+| Javascript | 9 |
+| Go | 6 |
+| Rust | 3 |
+
+## Common Feedback
+
+1. Make use of logging library
+2. Handle errors
+3. Add timestamps to logs
+
+## Logging in Javascript
+
+```js
+// initialize once
+export const logger = new Log4js.getLogger("deaddrop");
+
+// log anywhere
+logger.info(user, "checked their messages");
+logger.error("failed to decrypt database");
+logger.warn(user, "failed authentication");
+```
+
+## Logging in Go
+
+```go
+// initialized once
+file, err := os.OpenFile("deaddrop.log", 
+    os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+check(err)
+log.SetOutput(file)
+
+// write anywhere
+log.Println("INFO", user, "checked their messages")
+log.Println("ERROR", "failed to decrypt database")
+log.Println("WARN", user, "failed to authenticate")
+```
+
+
+## Logging in Rust
+
+```rs
+// initialize once
+log4rs::init_config(config)
+    .expect("expected log config to exist")
+
+// write anywhere
+info!("{} checked their messages", user);
+error!("failed to decrypt database")
+warn!("{} failed authentication", user);
+```
+
+## Error Handling Advice
+
+1. Don't treat all errors the same
+2. Leverage your type system
+3. Refactor when appropriate
+
+
+# Code Examples
+
+## Lets Talk Middleware
+
+```js
+import jwt from "jsonwebtoken";
+import fs from "fs";
+
+const key = fs.readSync("key.pem");
+
+const authMiddleware = (req, res, next) => {
+  // extract the "Bearer $" from the auth header
+  const token = req.headers["Authorization"].split(7);
+  if (!jwt.verify(token, key)) {
+    res.status = 403;
+    res.fail();
+  }
+  return next();
+};
+```
+
+## Stringing it Together
+
+```js
+import express from "express";
+
+const app = express();
+app.use(authMiddleware);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+```
+
+## Under the Hood
+
+```js
+const onHttpRequestReceived = (req, res) => {
+  app.getFirstMiddleware();
+  if (req.route == "/") {
+    res.send("Hello World");
+  }
+};
+```
+
+## Multiple Middleware
+
+```js
+const infoLoggingMiddleware = (req, res, next) => {
+  console.log(`endpoint ${req.route} hit`);
+  return next();
+};
+
+const app = express();
+app.use(authMiddleware);
+app.use(infoLoggingMiddleware);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+```
+
+## The Pathway of Composition
+
+```js
+// . is the composition opperator
+/* app -> authMiddleware . infoLoggingMiddleware . (req, res) => {
+    res.send("Hello World")
+} */
+```
+
+## Redundant Validation
+
+```js
+app.use(authMiddleware);
+app.get("/", (req, res) => {
+  authMiddleware(req, res, () => {
+    res.send("Hello World");
+  });
+});
+```
+
+## Multiple Redundant Validation
+
+```js
+app.use(authMiddleware);
+app.use(infoLoggingMiddleware);
+app.get("/", (req, res) => {
+  authMiddleware(req, res, () => {
+    infoLoggingMiddleware(req, res, () => {
+      res.send("Hello World");
+    });
+  });
+});
+```
+
+## Do This With "Acceptance of Security Responsibility"
+
+Can be as simple as some additional documentation:
+
+```js
+const app = express();
+
+// auth middleware required for user authentication
+app.use(authMiddleware);
+app.use(infoLoggingMiddleware);
+
+/// --- SNIP --- ///
+
+// GET endpoint for root page. 
+// Only responds with a hello world
+// authorization required: authMiddleware
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+```
+
+## Express Secure Defaults
+
+[[Refer to this link]](https://expressjs.com/en/advanced/best-practice-security.html)
+
+## Secure Programming for Web Servers in Go
+
+[[A security first project]](https://github.com/google/go-safeweb)
+
+See content under `//go-safeweb/examples/simple-application/server/server.go` and look for `postNotesHandler`
