@@ -6,8 +6,8 @@
 
 ## Outline
 
-- Lots of Different Design Patterns
-- State Patterns
+- Design Patterns
+- Design Paradigms
 - "Preventing Security Bugs Through Software Design"
 
 # Design Patterns
@@ -297,7 +297,196 @@ Instead, the paradigm can be useful.
 
 ## Singleton Pattern
 
+_Ensure a class has one instance, and provide a global point of access to it._
+
+---
+
+"There are times when a class cannot perform correctly if there is more than one instance of it. The common case is when the class interacts with an external system that maintains its own global state"
+
+Like a file system or a Database
+
+## DB Connection
+
+```go
+type Database struct {
+	Db *sql.DB
+}
+
+var instance *Database
+var once sync.Once
+
+func Connect() *Database {
+	once.Do(func() {
+		/// --- initialize and connect --- ///
+	})
+
+	return instance
+}
+```
+
+## Once Code
+
+```go
+mustCreateDb := false
+if _, err := os.Stat("dd.db"); err != nil {
+    mustCreateDb = true
+}
+
+database, err := sql.Open("sqlite3", "dd.db")
+if err != nil {
+    log.Fatalf("Error connecting to database: %v", err)
+}
+
+/// --- CONT --- ///
+```
+
+---
+
+```go
+/// --- CONT --- ///
+if mustCreateDb {
+    if command, err := os.ReadFile("init.sql"); 
+        err == nil {
+        _, err := database.Exec(string(command))
+        if err != nil {
+            log.Fatalf(
+                "Error initializing database: %v", err
+            )
+        }
+    } else {
+        log.Fatalf("Error loading sqlite initial schema")
+    }
+}
+
+/// NOTE THIS LINE
+instance = &Database{Db: database}
+```
+
+---
+
+```go
+var instance *Database
+
+
+func Connect() *Database {
+	once.Do(func() {
+		/// --- initialize and connect --- ///
+	})
+
+	return instance // this is what makes it singleton
+}
+```
+
+## Benefits of Singleton
+
+- The instance isn't created if nobody uses it
+- It's initialized at runtime
+- **JIT interface**
+- It can be used as a polymorphic object
+
+## Problems of Singleton
+
+- It's a global variable/system/state
+- It encourages coupling
+- It's not concurrency friendly
+
 ## State Pattern
+
+_Allow an object to alter its behavior when its internal state changes. The object will appear to change its class_
+
+---
+
+```ts
+interface State {
+    entry: () => (),
+    tick: (input: object): any => (),
+    exit: () => (),
+}
+```
+
+---
+
+```ts
+class IdleState implements State {
+    entry() {
+        this.setGraphics(IDLE);
+    }
+
+    tick(input: string) {
+        if (
+            input === "left" || 
+            input === "right"
+        ) {
+            return new RunState();
+        }
+        return undefined;
+    }
+
+    exit() {}
+}
+
+```
+
+---
+
+```ts
+class RunState {
+    entry() {
+        this.setGraphics(RUNNING);
+    }
+
+    tick(input: string) {
+        if (input === "left") {
+            this.x -= 5;
+        } else if (input === "right") {
+            this.x += 5;
+        } else {
+            return new IdleState();
+        }
+        return undefined;
+    }
+
+    exit() {
+        this.playSound(SLIDE_STOP);
+    }
+}
+```
+
+## The State Machine
+
+```ts
+class Player {
+    activeState: State
+
+    constructor() {
+        this.activeState = new IdleState();
+    }
+
+    tick(input: object) {
+        let nextOpt = this.activeState.tick(input);
+        if (nextOpt) {
+            this.activeState.exit();
+            this.activeState = nextOpt;
+            this.activeState.entry();
+        }
+    }
+}
+```
+
+## Limitations of State and State Machines
+
+1. State machines are only so expressive
+2. State counts explode quickly
+3. There's no concept of "previous state" baked in
+
+## Possible Solutions
+
+1. Concurrent states
+2. Hierarchical states
+3. PDA
+4. Don't use state?
+
+# Design Paradigms
 
 ## Monads
 
@@ -392,6 +581,14 @@ match get_user_session_token() {
     None => panic!("Unable to get session token")
 }
 ```
+
+## Inheritance
+
+## Composition
+
+## MVC
+
+## ECS
 
 # Questions
 
