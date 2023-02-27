@@ -582,13 +582,214 @@ match get_user_session_token() {
 }
 ```
 
+## Inheritance vs Composition
+
+**Inheritance** is all about the "is a" relationship.
+
+**Composotion** is all about the "has a" relationship.
+
+A Jeep _is a_ car, but it _has an_ engine, wheels, and radio.
+
 ## Inheritance
+
+```ts
+interface Car {
+    mpg: number,
+    fuel: number,
+    drive: () => (),
+    gasUp: () => (),
+}
+```
+
+## Jeep
+
+```ts
+class Jeep implements Car {
+    mpg: number;
+    fuel: number;
+
+    constructor() {
+        this.mpg = 14;
+        gasUp();
+    }
+
+    drive() {
+        move(this.mpg * 0.1);
+        fuel -= 0.1;
+    }
+
+    gasUp() {
+        fuel = 18.0;
+    }
+}
+```
+
+## Tesla
+
+```ts
+class Jeep implements Car {
+    mpg: number; // ????????
+
+    /// --- SNIP --- ///
+}
+```
 
 ## Composition
 
+```ts
+interface Motor {
+    charge: number
+    getPower: () => number,
+}
+
+interface Engine {
+    fuel: number,
+    getPower: () => number,
+}
+```
+
+## Jeep 
+
+```ts
+class Jeep {
+    fuel: number;
+    engine: Engine;
+
+    drive() {
+        x, y += engine.getPower();
+        fuel -= 0.1;
+    }
+}
+```
+
+## Tesla
+
+```ts
+class Tesla implements Vehicle {
+    charge: number;
+    motor: Motor
+
+    drive_electrically() {
+        x, y += motor.getPower();
+        charge -= 0.2;
+    }
+}
+```
+
+## How do we drive?
+
+We coul always add an `isElectric` method.
+
+```ts
+cars.forEach((car) => {
+    if (car.isElectric) {
+        car.drive_electrically();
+    } else {
+        car.drive();
+    }
+})
+```
+
+But what about nuclear powered cars?
+
+## Both Inheritance and Composition
+
+```ts
+interface Vehicle {
+    move: (() => number) => (),
+}
+
+interface Motor {
+    charge: number
+    getPower: () => number,
+}
+
+interface Engine {
+    fuel: number,
+    getPower: () => number,
+}
+```
+
+## Jeep 
+
+```ts
+class Jeep implements Vehicle {
+    fuel: number;
+    engine: Engine;
+
+    move() {
+        x, y += engine.getPower();
+        fuel -= 0.1;
+    }
+}
+```
+
+## Tesla
+
+```ts
+class Tesla implements Vehicle {
+    charge: number;
+    motor: Motor
+
+    move() {
+        x, y += motor.getPower();
+        charge -= 0.2;
+    }
+}
+```
+
+## Takeaways
+
+1. Composition allows for more granular/specific behavior
+2. Inheritance can lead to "unused" fields and methods
+3. Composition can lead to difficulty "combining" different types of things
+4. The best option is probably somewhere in the middle if OOP makes sense
+
 ## MVC
 
+![MVC Data Flow](./ssd/assets/07/mvc.png)
+
+## Model-View-Controller Principles
+
+1. Model = data
+2. View = visuals
+3. Controller = logic
+
+(i.e. Frontend, Backend, DB)
+
+## Model
+
+The model defines what data our application contains. When the state of the data changes, it will notify the view (subscriber pattern?).
+
+## View
+
+The view defines how data is displayed and how input will be accepted from the user. When it receives input, it notifies the controller.
+
+## Controller
+
+The controller contains the logic which operates on the input. It then updates or modifies the model.
+
 ## ECS
+
+![ECS Composition Patterns](./ssd/assets/07/ecs.png)
+
+## Entity-Component-System Principles
+
+1. Entity = uid
+2. Component = data
+3. System = behavior
+
+## Entity
+
+Entities are just unique identifiers. These identifiers can then be correlated with various components (or more accurately components can be assigned to entities).
+
+## Component
+
+Components are datatypes. They can have additional data or only be a "tag."
+
+## System
+
+Systems are behavior defined for entities with specific components.
 
 # Questions
 
