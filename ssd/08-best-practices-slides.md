@@ -7,7 +7,6 @@
 ## Outline
 
 - Clean Code
-- Clean Coders
 - Tools of the Trade
 - Solid Workflows
 - Refactoring Kata
@@ -491,23 +490,33 @@ _"By now everyone knows that TDD asks us to write unit tests first, before we wr
 2. Write tests for a function, validating intended behavior.
 3. Write the production code for the function, ensuring tests pass before moving on.
 
-# Questions?
-
-# Clean Coders
-
-## Coding
-
-## Practicing
-
-## Testing
-
-## Estimation
-
-## Collaboration
-
 ## Optimization
 
-Premature optimization is the root of all evil.
+Premature optimization is the root of all evil. Don't spend time arguing over what piece of code is least efficient, test it and find out. Then your efforts at optimization can actually address the problem.
+
+## Example: Big Data Processing
+
+**Problem:** Given a set of 25 million sentences, return the count of sentences which are within an edit distance of 1 from each other.
+
+**Restriction:** Your algorithm must scale linearly (i.e. O(n)).
+
+---
+
+This was the most important code I wrote for this problem.
+
+```go
+for _, exp := range experiments {
+    // we use profiling to identify the bottleneck
+    cpu, err := os.Create("cpu.prof")
+    if err != nil {
+        log.Fatal(err)
+    }
+    pprof.StartCPUProfile(cpu)
+    defer pprof.StopCPUProfile()
+
+    driver(exp.fname, exp.size)
+}
+```
 
 # Questions?
 
@@ -515,17 +524,92 @@ Premature optimization is the root of all evil.
 
 ## Version Control
 
+See supplemental lecture for discussions of Git and Git workflows.
+
 ## IDEs
 
-## Component Testing Tools
+Underutilized features of IDEs:
+
+- profilers
+- debuggers
+- linters
+
+Just like we expect a carpenter to be able to use all the tools in the workshop, we should make use of all the tools in our IDEs.
 
 # Solid Workflows
 
 ## CI/CD
 
+Continuous Integration and Continuous Deployment both came out of the Agile world. Since we iterate more quickly, it makes more sense to move to releasing at that speed of iteration. Eventually, this became the modern practice of, anytime there's a change, just deploy the changes.
+
+- Makes bug patching very easy
+- No need for complex distribution/upgrade models
+- Forcing updates can become very difficult
+
+## Continuous Integration
+
+Using integration tests to validate that your changes don't break anything, CI allows you to confidently say that code works because every change you make is tracked and tested.
+
+## Setup
+
+File: `.gitlab-ci.yml`
+
+```yml
+default:
+    image: andeyrobins/pmars:v0.9.4
+
+test-job:
+    stage: test
+    script:
+        - npm install
+        - npm test
+```
+
+## Result
+
+![Check mark on all passing/good commits](./ssd/assets/08/repo-with-ci.png)
+
+---
+
+![README badges are another common way of displaying status](./ssd/assets/08/readme-badge.png)
+
+---
+
+![Results of the CI pipeline execution](./ssd/assets/08/pipeline-exec.png)
+
+## Continuous Deployment
+
+Since we can say that no changes were made which invalidate our work (because of our CI testing), there's no reason not to just ship the software immediately.
+
+## Setup
+
+File: `.gitlab-ci.yml`
+
+```yml
+image: alpine:latest
+
+pages:
+    stage: deploy
+    artifacts:
+        paths:
+            - public
+    only:
+        - master
+```
+
+---
+
+![The similarities of the CD pipeline](./ssd/assets/08/cd.png)
+
 ## Commit Hooks
 
+Commit hooks are a way to run code before a commit. Always forget to lint your code or test it before you commit and push? Setup a hook to automatically do it!
+
+Some repositories will have hooks that reject code that isn't up to standard as a way to enforce their ecosystem properly. They're integrated in the same manner as the CI/CD pipeline stuff we showed in previous slides (i.e. through `.gitlab-ci.yml` or its GitHub counterpart).
+
 ## PRs and Git
+
+Once again, see supplemental lecture 2.
 
 # Refactoring Kata
 
