@@ -1,7 +1,546 @@
 % Reinforcement
 % Andey Robins & Dr Borowczak
-% October 11, 2022
+% March 7, 2023
 
+# Advanced Lists
+
+## Outline
+
+- Creating Lists
+- Reading Lists
+- Modifying Lists
+- Slices
+- `for` Loops
+- List Methods
+
+# Creating Lists
+
+## Pre-filled Lists
+
+We've seen this a lot, how do we construct a list of the numbers from 2 to 4?
+
+---
+
+```python
+two_to_four = [2, 3, 4]
+```
+
+## List Syntax
+
+```bash
+<Variable name> = [ <value> , <value> ]
+```
+
+## Empty Lists
+
+```bash
+<Variable name> = [ ]
+```
+
+## Why Empty Lists?
+
+We make empty lists for a few reasons:
+
+1. To later update
+2. As a placeholder
+3. To check if a list is empty
+
+# Reading Lists
+
+## Elements
+
+```python
+ex_list = ['a', 'b', 'c', 'd', 'e']
+
+```
+
+|Positive Index| 0 | 1 | 2 | 3 | 4 |
+|--------------|---|---|---|---|---|
+|Negative Index|-5 |-4|-3|-2|-1|
+|List Item |'a'|'b'|'c'|'d'|'e'|
+
+## Slices
+
+In python notation:
+
+```python
+my_list[start:end]
+```
+
+In interval notation:
+
+$$ [ \text{start, end} ) $$
+
+In English:
+
+All elements in `my_list` from `start` up to but not including `end`.
+
+## Why?
+
+What does this give us?
+
+```python
+my_list[0:len(my_list)]
+```
+
+---
+
+```python
+my_list[0:len(my_list)] == my_list
+```
+
+## Helpful Slices
+
+```python
+my_list = [1, 2, 3, 4, 5, 6]
+
+without_last = my_list[:-1]
+without_first = my_list[1:]
+without_ends = my_list[1:-1]
+only_first = my_list[:1]
+only_last = my_list[-1:]
+```
+
+## What's the Difference?
+
+```python
+only_first = my_list[:1]
+
+# print(only_first) -> ???
+
+only_first = my_list[0]
+
+# print(only_first) -> ???
+```
+
+---
+
+```python
+only_first = my_list[:1]
+
+# print(only_first) -> [1]
+
+only_first = my_list[0]
+
+# print(only_first) -> 1
+```
+
+# Modifying Lists
+
+## Update an Element
+
+```python
+my_list = [0, 1, 2, 3, 4]
+
+my_list[3] = 'a'
+
+print(my_list) # ???
+```
+
+---
+
+```python
+my_list = [0, 1, 2, 3, 4]
+
+my_list[3] = 'a'
+
+print(my_list) # [0, 1, 2, 'a', 4]
+```
+
+## Updating Slices
+
+```python
+my_list = [0, 1, 2, 'a', 4]
+
+my_list[3:5] = ['b', 'c']
+
+print(my_list) # What does this print?
+```
+
+---
+
+```python
+my_list = [0, 1, 2, 'a', 4]
+
+my_list[3:5] = ['b', 'c']
+
+print(my_list) # [0, 1, 2, 'b', 'c']
+```
+
+## Updating Strings
+
+Indices work the same in strings and lists. That's why we sometimes say strings are like lists of characters. We'll now examine how they aren't exactly alike.
+
+---
+
+```python
+my_string = "hiya"
+
+print(my_string[3]) # ???
+```
+
+---
+
+```python
+my_string = "hiya"
+
+print(my_string[3]) # "a"
+```
+
+---
+
+```python
+my_string = "hiya"
+
+print(my_string[-2]) # ???
+```
+
+---
+
+```python
+my_string = "hiya"
+
+print(my_string[-2]) # "y"
+```
+
+---
+
+```python
+my_string = "hiya"
+
+print(my_string[1:4]) # ???
+```
+
+---
+
+```python
+my_string = "hiya"
+
+print(my_string[1:4]) # "iya"
+```
+
+---
+
+```python
+my_string = "hiya"
+my_string[1] = "o"
+
+print(my_string) # ???
+```
+
+---
+
+```python
+my_string = "hiya"
+my_string[1] = "o" # ERROR
+
+print(my_string)
+```
+
+---
+
+```bash
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'str' object does not support item assignment
+```
+
+# Slices
+
+## What Does This Do?
+
+```python
+my_string = "this is a string."
+
+new_string = my_string[0].upper() + my_string[1:]
+
+print(new_string) # ???
+```
+
+---
+
+```python
+my_string = "this is a string."
+
+new_string = my_string[0].upper() + my_string[1:]
+
+print(new_string) # "This is a string."
+```
+
+---
+
+```python
+my_string = "this is a string."
+
+new_string = my_string[:-1] + "!"
+
+print(new_string) # ???
+```
+
+---
+
+```python
+my_string = "this is a string."
+
+new_string = my_string[:-1] + "!"
+
+print(new_string) # "this is a string!"
+```
+
+---
+
+```python
+my_string = "this is a string."
+
+new_string = my_string[:len(my_string)/2].upper() +
+             my_string[len(my_string)/2:].lower()
+
+print(new_string) # ???
+```
+
+---
+
+```python
+my_string = "this is a string."
+
+new_string = my_string[:len(my_string)/2].upper() +
+             my_string[len(my_string)/2:].lower()
+
+print(new_string) # "THIS IS My string."
+```
+
+# `for` Loops
+
+## Syntax
+
+```python
+for variable in list:
+  # loop code here
+```
+
+---
+
+```python
+for num in [1, 2, 3, 4, 5]:
+  print(num)
+
+1
+2
+3
+4
+5
+```
+
+---
+
+```python
+sum_val = 0
+for num in my_list:
+  sum_val += num
+
+print(sum_val)
+```
+
+## A Simpler Approach to Last Lab
+
+```python
+...
+translation = ""
+for word in sentence.split():
+  translation += en2tp[word] + " "
+...
+```
+
+## Loop Equivalence
+
+The loops presented on the next two slides are semantically equivalent.
+
+## While Loop
+
+```python
+my_list = [1, 2, 3, 4, 5, 6, 7]
+
+idx = 0
+while idx < len(my_list):
+  print(my_list[idx])
+  idx += 1
+```
+
+## For Loop
+
+```python
+my_list = [1, 2, 3, 4, 5, 6, 7]
+
+for num in my_list:
+  print(num)
+```
+
+# List Methods
+
+## `append`
+
+`append(val)` takes one argument, an item, and adds it to the list
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+fruit.append("dates")
+
+print(fruit)
+# ["apples", "bananas", "cherries", "dates"]
+```
+
+## `pop`
+
+`pop()` removes the last item from the list.
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+fruit.pop()
+
+print(fruit) # ["apples", "bananas"]
+```
+
+## `insert`
+
+`insert(idx, val)` takes two arguments: the index to insert the value at and the value to insert.
+
+---
+
+```python
+fruit = ["apples", "cherries"]
+
+fruit.insert(1, "bananas")
+
+print(fruit) # ["apples", "bananas", "cherries"]
+```
+
+## What Does This Do?
+
+```python
+fruit = ["apples", "cherries"]
+
+fruit.inesert(100, "bananas")
+
+print(fruit) # ???
+```
+
+---
+
+```python
+fruit = ["apples", "cherries"]
+
+fruit.inesert(100, "bananas")
+
+print(fruit) # ["apples", "cherries", "bananas"]
+```
+
+## `clear`
+
+`clear()` removes all items from a list.
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+fruit.clear()
+
+print(fruit) # []
+```
+
+## `index`
+
+`index(val)` returns the index of the item given as an argument.
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+print(fruit.index("bananas")) # ???
+
+print(fruit.index("dates")) # ???
+```
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+print(fruit.index("bananas")) # 1
+
+print(fruit.index("dates")) # ERROR
+```
+
+---
+
+```bash
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: 'dates' is not in list
+```
+
+## `reverse`
+
+`reverse()` reverses the list.
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+fruit.reverse()
+
+print(fruit) # ["cherries", "bananas", "apples"]
+```
+
+## `sort`
+
+`sort()` sorts the list in lexicographic order.
+
+---
+
+```python
+fruit = ["apples", "bananas", "cherries"]
+
+fruit.sort()
+
+print(fruit) # ["apples", "bananas", "cherries"]
+```
+
+---
+
+```python
+fruit = ["dates", "bananas", "cherries", "apples"]
+
+fruit.sort()
+
+print(fruit) 
+# ["apples", "bananas", "cherries", "dates"]
+```
+
+## An Example
+
+Imagine we are a fruit merchant wanting to standardize our item list. Currently it's random and mixed case. We want to output everything as an all capitals, alphabetical list.
+
+---
+
+```python
+mixed_fruit = ["Bananas", "APPLES", "cherries", "dAtEs"]
+output_fruit = []
+for fruit in mixed_fruit:
+  output_fruit.append(fruit.upper())
+output_fruit.sort()
+print(output_fruit)
+```
+
+# Questions?
 
 # Reinforcement
 
@@ -247,144 +786,10 @@ def remove_dupes(input_list):
   return output_list
 ```
 
-# Game Modifications
+# Text Adventure Game
 
-## What to do?
+## Goal
 
-We want to add an increase in difficulty to the game as you progress. The simplest way I see to do this, we have harder monsters!
-
----
-
-```python
-MONSTER_HEALTH = [10, 10, 10, 15, 15, 20, 20, 20, 25, 40]
-```
-
----
-
-Then, we can prevent the player from moving or resting if there are monsters nearby!
-
-```python
-if MONSTER_HEALTH[ROOM] > 0:
-  print("There's a monster to kill first!")
-  return
-```
-
-## The End
-
-How can we create an end condition with our game now that we're storing monster health in a list?
-
----
-
-```python
-if ROOM > len(MONSTER_HEALTH):
-  print("You finally escape into the light. Free at last!")
-  CONTINUE = False
-  return
-```
-
-## Interesting Loot
-
-Create some item descriptions.
-
-```python
-INVENTORY = []
-LOOT = ["A Magic Sword", "A cryptic scroll", 
-        "A leather chord", "A Potion of Healing", 
-        "A Bottle of Water"]
-```
-
----
-
-Loot drop
-
-```python
-global PLAYER_GOLD, INVENTORY, LOOT
-rand = random.randrange(5)
-if rand % 2 == 0:
-  print("Found some gold!")
-  PLAYER_GOLD += 2
-elif rand == 1:
-  print("What's this?")
-  # cool loot
-else:
-  print("Found nothing.")
-```
-
----
-
-If we find cool loot, pop an item from the Loot list and add it to the player's inventory.
-
-```python
-looted_item = LOOT.pop()
-print("Found", looted_item)
-INVENTORY.append(looted_item)
-```
-
----
-
-Add an inventory command
-
-```python
-def act(action):
-  ...
-  elif action == "I" or action == "i":
-    inventory()
-  ...
-```
-
-## Requirements for `inventory()`
-
-- Tell the player which items they have
-- Behave nicely if there are no items
-- Behave nicely when there is an arbitrary number of items
-
----
-
-```python
-def inventory():
-  if "Magical Sword" in INVENTORY:
-    print("You have a magical sword")
-  ...
-```
-
----
-
-```python
-def inventory():
-  for item in INVENTORY:
-    print("You have", item)
-```
-
-## Bounds Checking
-
-```python
-def inventory():
-  if len(INVENTORY) == 0:
-    print("You haven't found any items.")
-    return
-  
-  for item in INVENTORY:
-    print("You have", item)
-```
-
----
-
-Now we can also make our loot function check if there are more items to find.
-
-```python
-if len(LOOT) != 0:
-  looted_item = LOOT.pop()
-  print("Found", looted_item)
-  INVENTORY.append(looted_item)
-else:
-  print("Found nothing.")
-```
-
-## Extensions
-
-- Provide a way of playing an endless mode.
-- Provide a way for the player to increase their damage.
-- Provide a way for the player to backtrack.
-- Add special loot that is in certain rooms.
+We're going to put together everything we've done so far and write a fun little text adventure game. Let's begin by breaking down what we actually need to do.
 
 # Questions
