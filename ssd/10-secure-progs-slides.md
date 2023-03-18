@@ -7,8 +7,8 @@
 1. Weeks 14 and 15, no class. Work on the final instead.
 2. Code analysis moving to supplemental lecture
 3. Dropping the Session Design assignment.
-   1. 5 more points to input validation
-   2. If this would impact your grade, talk to me
+   1. See syllabus for point changes
+4. A final "grade" will be manually entered at the end of the semester
 
 # Secure Programming
 
