@@ -261,27 +261,177 @@ else
 
 ## Vulnerabilities
 
+_All happy families are alike; each unhappy family is unhappy in its own way._ - Leo Tolstoy
+
+$$ $$
+
+Secure code is all the same, vulnerabilities are the differences in this analogy.
+
 ## Atomicity
+
+Code will be running in parallel, whether you have multi-threaded code or not. When your code is the multi-threaded part, we're all familiar with the problems that can arise in the form of race-conditions, deadlock, etc.
+
+*Atomicity* is the response, stating that operations which are atomic are guaranteed to effectively be completed in a single step. 
+
+## Example: Python Atomicity of Files
+
+```py
+fname = tempfile.mktemp()
+with open(fname, "w+") as f:
+   f.write("My super sensitive, secret info")
+```
+
+## Example: Truly Atomic Python Files
+
+```py
+with open(tempfile.NamedTemporaryFile, "w+") as f:
+   f.write("My super sensitive, secret info")
+```
+
+## Multithreaded Machines
+
+A key reminder for working with atomic code is that everything runs in a parallel environment in modern software.
+
+- Assume interactions with the outside world can hit this system
+- Plan for atomic operations to play defensively
 
 ## Timing Attacks
 
+**Timing Attacks** are side-channel attacks which use information about the execution time to infer information about the system state.
+
+---
+
+![Spectre and Meltdown](./ssd/assets/10/meltdown-spectre-table.png)
+
+## Mitigating Timing Attacks
+
+"The best mitigation option is to reduce the time differential to an acceptable level."
+
+1. Remove/refactor sequential logic
+2. Defer returning until after all checks
+3. Add artificial delays
+
 ## Serialization
+
+_Serialization_ is the technique of converting objects to a byte stream. This stream can then be transmitted, saved, or otherwise used to allow objects to move between systems.
+
+## A Question of Trust
+
+Serialization is a very useful, important tool for developers. Pickling and unpickling datasets and ML models is one specific instance of this which is widespread.
+
+The problem isn't that serialization doesn't do the necessary "leg work" to be secure, but it is inherently relying on trust in the serialized data.
 
 ## The Usual Suspects
 
+The following collection of "issues" tend to keep cropping up no matter what we do to try to banish them from the software world.
+
+---
+
+These will seem obvious, and I probably am not the first person to tell you about these problems.
+
+$$ $$
+
+They continue to be some of the most costly bugs and vulnerabilities to this day.
+
 ## Fixed-Width Integer Vulnerabilities
+
+What does the following C code do?
+
+```c
+#include <stdio.h>
+
+unsigned char cost = 200;
+cost = cost * 0.5 + cost;
+printf(cost); // 44
+```
+
+## The Problem
+
+When we need to represent numbers beyond the size of what our processor can represent, the addional bytes are just "discarded." In other words, operations are performed under modular arithmetic where our modulus is 2 to the power of the width.
 
 ## Floating-Point Precision Vulnerabilities
 
+What does this javascript do?
+
+```js
+if (0.1 + 0.2 === 0.3) {
+   console.log('Equal');
+} else {
+   console.log('Not Equal');
+}
+```
+
+## IEEE 754
+
+![The parts of IEEE standard 754](./ssd/assets/10/ieee-754.jpeg)
+
 ## Examples: Underflow and Overflow
+
+Some specific examples are presented in the textbook for both of these scenarios.
+
+Why am I not going to spend any time talking about them?
+
+## Rust and Under/Overflow
+
+![The Rust approach to dealing with overflow](assets/10/rust-overflow.png)
 
 ## Safe Arithmetic
 
+With all this said, what should you do about numeric representations?
+
+1. Take extra caution during type coercion (i.e. look for truncation/distortion)
+2. Constrain input values and assert those bounds
+3. Use extra-large datastructrues
+4. Watch intermediate values as potentially unchecked locations
+5. Test, test, test
+
+Alternatively, just use a big number option
+
 ## Memory Management
+
+```c
+uint8_t *p;
+// don't use p before this
+p = malloc(100); // allocate 100 bytes
+p[0] = 1;
+p[99] = 123 + p[0];
+free(p); // release the memory again
+// now don't use p again, pinky promise?
+```
+
+## Use After Free
+
+When we make use of (i.e. access, attempt to update, or otherwise interact with) pointers, nothing ties the lifetime of that pointer to the lifetime of the memory we allocate for it.
+
+In other words, we can still use `p` after we have freed the memory that the pointer points to.
+
+## So What?
+
+The results of use after free are laregly undefined, and could be as simple as crashing, or they could allow for reading arbitrary sections of memory without any restrictions.
 
 ## Buffer Overflow
 
+```c
+uint8_t *p;
+p = malloc(100); // allocate 100 bytes
+p[0] = 1;
+p[100] = 123 + p[0]; // overflow
+free(p);
+```
+
+## So What?
+
+![Heartbleed](./ssd/assets/01/heartbleed_explanation.png)
+
 ## Leaking Memory
+
+```c
+uint8_t *p;
+p = malloc(100); // allocate 100 bytes
+p[0] = 1;
+p[100] = 123 + p[0]; // overflow
+// free(p); oops i forgot this
+```
 
 # Questions?
 
