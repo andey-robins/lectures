@@ -373,7 +373,7 @@ Why am I not going to spend any time talking about them?
 
 ## Rust and Under/Overflow
 
-![The Rust approach to dealing with overflow](assets/10/rust-overflow.png)
+![The Rust approach to dealing with overflow](./ssd/assets/10/rust-overflow.png)
 
 ## Safe Arithmetic
 
