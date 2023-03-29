@@ -169,8 +169,140 @@ function adddashes() {
 
 ## Input Vulnerabilities
 
+A number of potential places are rife with vulnerabilities caused by injection:
+
+- Buffers
+- Glyphs/encodings
+- Case changes
+
+## Length Problems
+
+"Don't confuse character count with byte length when allocating buffers."
+
+Full stop, that's the advice. Because...
+
+## Unicode
+
+- Most things use UTF-8; Also there are UTF-7, UTF-16, and UTF-32
+- Sorting unicode behaves different across languages and code points
+- A "character" is a variable number of bytes
+- Modifiers, diachritics, and symbols are in there too
+- Localization can change Unicode valuation
+
+## How to Handle Unicode
+
+**Dont. At all costs.**
+
+Use a library, don't reinvent the wheel. Most languages have a strong Unicode handler either as part of the Standard library or as a widely recognized community package.
+
+## Encodings
+
+_Unicode encodes characters, not glyphs_
+
+## Case Change Vulnerabilities
+
+Lowercase characters to uppercase characters is a many-to-one relationship.
+
 ## Injection Vulnerabilities
+
+**Injection Attacks** are attacks which use an input to a system to be directly interpreted or executed in a malicious way.
+
+Example: My intramural team named "No Game Scheduled."
+
+## Common Injection Targets
+
+- Filepaths
+- Shell commands
+- HTTP
+- **SQL**
+
+## SQL Injection
+
+![Bobby Tables](./ssd/assets/11/bobbytables.png)
+
+## SQL Injection Example
+
+```sql
+INSERT INTO Students (name)
+VALUES ('Robert');
+```
+
+Where the input string is `Robert`
+
+---
+
+```sql
+INSERT INTO Students (name)
+VALUES ('Robert'); DROP TABLE Students;--)
+```
+
+Where the input string is `Robert'); DROP TABLE Students;--`
+
+## Underlying Cause
+
+```ts
+let name = 'Robert';
+let injection = "Robert'); DROP TABLE Students; --";
+// name = injection;
+let sql_stmt = `
+    INSERT INTO Students (name) 
+    VALUES (${name});
+`;
+```
+
+## Safe Input
+
+```ts
+// both are fine
+db.run(`
+    INSERT INTO Students (name)
+    VALUES (:name);
+`, {
+    ":name": name,
+});
+db.run(`
+    INSERT INTO Students (name)
+    VALUES (:name);
+`, {
+    ":name": injection,
+});
+```
+
+## Regular Expressions
+
+Our best tool for validating strings, they're a state-machine based parser.
+
+Can be an exploit point for DoS attacks where backtracking is possible.
+
+## Regex Injection
+
+```python
+import re
+from time import time
+
+def time_backtrack(n=1):
+    start = time()
+    re.match(r'(D+)+$', 'D'*n + '!')
+    return time() - start
+
+for i in range(1, 40):
+    print(i, ':=', time_backtrack(i))
+```
 
 ## Mitigation
 
+1. Anytime you're concatenating strings and vars, consider injection attacks
+2. Don't insert untrusted data into any strings
+3. Make use of helper functions for your domain
+
 ## Fuzzing
+
+**Fuzzing** is an automated testing technique which makes attempts a wide range of random potential inputs to ensure the system behaves well in general with any arbitrary input.
+
+_Code reviewed externally_
+
+# Questions?
+
+## Next Time
+
+Welcome to the Internet.
