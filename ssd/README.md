@@ -61,29 +61,21 @@ Week 11, 03/27 - 03/31: Input Validation
 - Model challenges and attacks related to validation
 - Describe various approaches to input attacks and their attack surfaces
 
-Week 12, 04/03 - 04/07: Security Testing
-- Describe and understand the need for software testing
-- Describe differences between traditional testing and security testing
-- Understand and develop tests to search for security concerns
-
-Week 13, 04/10 - 04/14: Web Security
+Week 12, 04/03 - 04/07: Web Security
 - Describe fundamental techniques in web security
 - Improve existing web security infrastructure
 - Develop session systems which enable secure web programs
 
-Week 14, 04/17 - 04/21: Code Analysis
-- Compare and contrast the benefits and risks associated with static and dynamic code analysis
-- Describe situations in which code analysis can be integrated into developer workflows
-- Discuss situations where code analysis is limited
+Week 13, 04/10 - 04/14: Security Testing
+- Describe and understand the need for software testing
+- Describe differences between traditional testing and security testing
+- Understand and develop tests to search for security concerns
 
-Week 15, 04/24 - 04/28: Wrap Up
-- Review course content
-- Review results of programming assignments
-- Begin presenting individual and group programming projects
+Week 14, 04/17 - 04/21: No Class
+- Time provided for completing the final projects
+
+Week 15, 04/24 - 04/28: No Class
+- Time provided for completing the final projects
 
 Week 16, 05/01 - 05/05: Project Presentations
 - Present the results of your work so far on the final programming project
-
-Week 17, 05/08 - 05/12: Final Due Dates
-- Final Project Due
-- Anticipated May 8 at 8:00 am
