@@ -225,6 +225,14 @@ These are the potential ways to send and request information over the web.
 
 ## REST
 
+**Representational State Transfer:** is an approach to API design which removes all need for maintaining state from the web-server.
+
+A primary benefit is that it is client agnostic, allowing for arbitrary client stacks (i.e. Web and Mobile and Desktop through the same API)
+
+## HTTP vs REST
+
+HTTP may or may not have some concept of state. If it does, it isn't RESTful. If it doesn't, it's a REST API.
+
 ## CRUD
 
 - **C**reate, **R**ead, **U**pdate, **D**elete
@@ -233,6 +241,8 @@ These are the potential ways to send and request information over the web.
 - Built on top of HTTP
 
 ## RPC
+
+**Remote Procedure Call** is a computational methodology where almost all of the processing is done on the server. Modern versions use Protobuffs and HTTP 2 as well to make them incredibly quick with throughput.
 
 # Web Security
 
@@ -246,19 +256,112 @@ While we'll talk more about security in the web, it's important to provide some 
 
 ## Cookies
 
-## Certificates
+**Cookies** are small pieces of data which a server asks the client to store and provide on subsequent requests made to the server. 
 
----
+## An Analogy
 
-![Example Certificates for Google Images](./ssd/assets/12/certs.png)
+I'm a baker, and I want to keep track of how many times someone visits my bakery. If it's their first time I give them a slip of paper with the number 1 on it. Every time they come back in, I give them a new slip with their number plus 1.
+
+It's then easy to see how often a customer visits by checking their slip of paper (their cookie).
+
+## Session Cookies
+
+**Session Cookies** are a special type of cookie which establish a secure session between a client and the server. It allows an individual client to be identified by the server and is usually backed by some cryptographic assurance of identity.
+
+## Good Cookies
+
+- Preferences
+- Configurations/Settings
+- "Front End Stuff"
+- Identification
+- Session Management
+
+## Bad Cookies
+
+- Trackers*
+- Price
+- Security Information
+
+In other words, treat a cookie as a form of user input which is subject to all of the validation any user input is subject to.
+
+## Cookie Interaction
+
+A `<script>` has access to cookies by default unless they set the `httponly` attribute. Therefore, we can assume that cookies by default can be accessed by a malicious script, so why do we not just have `httponly` set by default?
+
+## Cookie Interaction
+
+A `<script>` has access to cookies by default unless they set the `httponly` attribute. Therefore, we can assume that cookies by default can be accessed by a malicious script, so why do we not just have `httponly` set by default?
+
+**Backwards Compatibility**
 
 ## Certificate Authorities
 
+**Certificate Authorities** are groups which are largely granted trust and who we trust to sign the certificates and authorize/authenticate other principles in the net. 
+
+Ex: Digicert, Let's Encrypt, Google Trust Services, etc.
+
+## Certificates
+
+**Certificates** are the digital artifacts produced by Certificate Authorities. It's basically just like any form of ID, but backed by a cryptographic identity.
+
+![Example Certificates for Google Images](./ssd/assets/12/certs.png)
+
 ## HTTP vs HTTPS
+
+**HTTPS** is just HTTP over TLS/SSL. It addresses threats by:
+
+1. Encrypting traffic in flight
+2. Prevent modification in the middle
+3. Verify communicator identities
+
+## Adoption 
+
+- Developed in 1994
+- Facebook used HTTP up until 2013
+- General hardware good enough as of 2015
+- 40% of the web in HTTPS in 2016
+- 85% as of 2020
+
+## Why the Delay?
+
+1. Hardware speeds
+2. Crypto bugs
+3. Lack of CAs (price wise)
+4. No consumer demand
+
+## Same Origin Policy
+
+You don't want a single website to be able to open up and modifying your accounts on other pages [citation needed].
+
+The "Same Origin Policy" is the idea that other pages (or origins) should not be able to _reach in_ to a page's content.
 
 ## CORS
 
-## Cookies and Subdomains
+**Cross-Origin Resource Sharing** is the mechanism to circumvent the Same Origin Policy. Established through headers and enforced by the browser, this places restrictions on which domains are allowed to send information to other domains. This is a common problem to run into while developing web apps locally, and slightly beyond the scope of what we have time to talk about.
+
+## Visible Information: Cookies
+
+Can the webpage served by the host see the cookies set for other hosts?
+
+|Host|ex.com|dog.ex.com|cat.ex.com|ex.org|
+|---|---|---|---|---|
+|ex.com|Yes|No|No|No|
+|dog.ex.com|Yes|Yes|No|No|
+|cat.ex.com|Yes|No|Yes|No|
+|ex.org|No|No|No|Yes|
+
+
+## Visible Information: HTTP
+
+|Can an attacker...|HTTP|HTTPS|
+|---|---|---|
+|see web traffic between endpoints?|Yes|Yes|
+|see both IP addresses?|Yes|Yes|
+|deduce the web server's identity?|Yes|Sometimes|
+|see what page within the site is requested?|Yes|No|
+|see the page content and the body of POSTs?|Yes|No|
+|see the headers and URL?|Yes|No|
+|tamper with the URL, headers, or content?|Yes|No|
 
 # Web Vulnerabilities
 
@@ -281,11 +384,34 @@ While we'll talk more about security in the web, it's important to provide some 
 9. Security Logging and Monitoring Failures
 10. Server-Side-Request Forgery
 
+## OWASP Top 10
+
+Turns out, we've covered and either mitigated or talked about all of these already!
+
+1. Broken Access Control (Midterm program)
+2. Crypto Failures (Week 5)
+3. Injection (Input sanitization)
+4. Insecure Design (This whole course)
+5. Security Misconfiguration (Week 4)
+6. Vulnerable and Outdated Components (Week 8)
+7. Identification and Authentication Failures (DD)
+8. Software and Data Integerity Failures (DD)
+9. Security Logging and Monitoring Failures (DD)
+10. Server-Side-Request Forgery (Earlier Today)
+
 ---
 
 ![The mapping of 2017 OWASP to 2021 OWASP](./ssd/assets/12/owasp-mapping.png)
 
 # DevOps and the Web
+
+## Test, Stage, Prod
+
+## Terraform
+
+## AWS and CSPs
+
+## OAuth and JWTs
 
 # Questions
 
