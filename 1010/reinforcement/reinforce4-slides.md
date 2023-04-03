@@ -1,6 +1,6 @@
 % Repetition & Reinforcement
 % Andey Robins & Dr Borowczak
-% November 1-3, 2022
+% April 4-6, 2023
 
 # Outline
 
@@ -14,15 +14,17 @@
 
 ## Class Schedule
 
+<!-- DATES -->
+
 |Week|Tuesday|Thursday|Assignments|
 |----|-------|--------|--------|
-|Oct 31|Reinforcement|Reinforcement|Quest Redo|
-|Nov 7|No Class|No Class|Quest D|
-|Nov 14|Classes|Classes|Lab|
-|Nov 21|Fall Break|Fall Break||
-|Nov 28|Reinforcement|Reinforcement|Lab|
-|Dec 5|No Class|No Class|Final Quest Retakes|
-|Dec 13|Final Quest|Comprehensive|10:15 AM|
+|Apr 3|Reinforcement|Reinforcement|Quest Redo|
+|Apr 10|No Class|No Class|Quest D|
+|Apr 17|Lecture|Lecture|Lab|
+|Apr 24|AMA|AMA|Lab|
+|May 1|No Class|No Class||
+|-----|---------|--------|---|
+|May 11|Final Quest A|Comprehensive|10:15 AM|
 
 # Dictionaries
 
@@ -39,7 +41,7 @@
 **Looping:**
 
 ```python
-for key, val in dictionary:
+for key, val in dictionary.items():
   print(key)
   print(val)
 ```
@@ -91,11 +93,11 @@ The message from the previous slide might look like this:
 
 ## Caesar Cipher
 
-![An illustration of the Caesar cipher](1200px-Caesar_cipher_left_shift_of_3.svg-633173253)
+![An illustration of the Caesar cipher](./1010/reinforcement/assets/04/caesar.png)
 
 ## Attack
 
-![A potential attack vector on the Caesar cipher: frequency analysis](th-215913282)
+![A potential attack vector on the Caesar cipher: frequency analysis](./1010/reinforcement/assets/04/frequency.png)
 
 ## Caesar Cipher Decoder
 
@@ -274,7 +276,7 @@ Everything in a computer is just a 1 or a 0. We often combine these into sets of
 
 ## ASCII
 
-![The Ascii table](image-2736084952)
+![The Ascii table](./1010/reinforcement/assets/04/ascii.png)
 
 ---
 
@@ -356,7 +358,7 @@ What is 11:00 am plus 50 minutes?
 
 ---
 
-![An analog clock](churchill-brown-wall-clock-p47056-48919_zoom-1263219643.jpg)
+![An analog clock](./1010/reinforcement/assets/04/clock.jpg)
 
 ---
 
@@ -477,5 +479,5 @@ Live code demo
 
 ---
 
-![*An-nyeong* an informal Korean greeting](Screen Shot 2022-11-02 at 10.11.16 PM.png)
+![*An-nyeong* an informal Korean greeting](./1010/reinforcement/assets/04/anyeong.png)
 
