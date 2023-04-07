@@ -343,33 +343,136 @@ The "Same Origin Policy" is the idea that other pages (or origins) should not be
 
 Can the webpage served by the host see the cookies set for other hosts?
 
-|Host|ex.com|dog.ex.com|cat.ex.com|ex.org|
-|---|---|---|---|---|
-|ex.com|Yes|No|No|No|
-|dog.ex.com|Yes|Yes|No|No|
-|cat.ex.com|Yes|No|Yes|No|
-|ex.org|No|No|No|Yes|
+| Host       | ex.com | dog.ex.com | cat.ex.com | ex.org |
+| ---------- | ------ | ---------- | ---------- | ------ |
+| ex.com     | Yes    | No         | No         | No     |
+| dog.ex.com | Yes    | Yes        | No         | No     |
+| cat.ex.com | Yes    | No         | Yes        | No     |
+| ex.org     | No     | No         | No         | Yes    |
 
 
 ## Visible Information: HTTP
 
-|Can an attacker...|HTTP|HTTPS|
-|---|---|---|
-|see web traffic between endpoints?|Yes|Yes|
-|see both IP addresses?|Yes|Yes|
-|deduce the web server's identity?|Yes|Sometimes|
-|see what page within the site is requested?|Yes|No|
-|see the page content and the body of POSTs?|Yes|No|
-|see the headers and URL?|Yes|No|
-|tamper with the URL, headers, or content?|Yes|No|
+| Can an attacker...                          | HTTP | HTTPS     |
+| ------------------------------------------- | ---- | --------- |
+| see web traffic between endpoints?          | Yes  | Yes       |
+| see both IP addresses?                      | Yes  | Yes       |
+| deduce the web server's identity?           | Yes  | Sometimes |
+| see what page within the site is requested? | Yes  | No        |
+| see the page content and the body of POSTs? | Yes  | No        |
+| see the headers and URL?                    | Yes  | No        |
+| tamper with the URL, headers, or content?   | Yes  | No        |
 
 # Web Vulnerabilities
 
 ## XSS
 
+**Cross Site Scripting Attacks (XSS)** are a class of injection attacks which alters the behavior of a website to run an unauthorized script.
+
+## Example: XSS
+
+We have a website with different colors which are encoding in the URL.
+
+`https://www.example.com/page?color=green`
+
+Which then has the color inserted into the page:
+
+```html
+<h1 style="color:green">This is colorful text</h1>
+```
+
+## Example: XSS
+
+The server side code would look something like this:
+
+```python
+query_params = urllib.parse.parse_qs(self.parts.query)
+color = query_params.get('color', ['black'])[0]
+h = '<h1 style="color:%s">This is colorful text.</h1>' % color
+```
+
+## Example: XSS
+
+The attack then looks like:
+
+```bash
+https://www.example.com/page?color=orange"><script>alert(
+  "Gotcha!")</script><span%20id="dummy
+```
+
+## Example: XSS
+
+Which makes the page render as:
+
+```html
+<h1 style="color:orange">
+  <script>alert("Gotcha!")</script>
+  <span id="dummy">This is colorful text.
+</h1>
+```
+
+## XSS
+
+What might an attack look like:
+
+1. An attacker finds a website which allows for XSS injection
+2. The attacker crafts a payload which exfiltrates session tokens
+3. The attacker embeds this payload in something sent to general users
+4. The users open up the page, triggering the payload
+5. The attacker gets the user's cookies
+
+## Forms of XSS
+
+**Reflected** - What we just walked through
+
+**Stored** - Getting the payload to live in storage somewhere
+
+**DOM-Based XSS** - Getting the payload to somehow lie in the underlying DOM rendering system
+
+## Mitigation
+
+1. Use a good library
+2. Validate user inputs
+3. Don't manually construct strings of HTML
+
 ## XSRF
 
+**Cross Site Request Forgery** is an attack on the limitations of the Same Orogin Policy.
+
+We will walk through the example fromm the textbook to see this in action.
+
+## Invariants
+
+1. Any website can GET resources from any other
+2. Any website can POST to any other
+   1. This request changes the state of the other system
+3. Website should be able to pull in content from other pages
+4. SOP means a website pulling in content can't see that content
+
+## XSRF Scenario
+
+Social website Y has many users. The site is running a poll and every user gets one vote. The website creates a one-time use cookie which is dropped by the voting page.
+
+## XSRF Potential
+
+A comment on the voting page of site Y has a link and says "Check this out before you vote!"
+
+This page is hosted on website X
+
+## XSRF Attack
+
+In the background, site X submits a false vote using the browser cookie jar to present the valid one-time cookie from site Y. The votes are thus manipulated in favor of site X.
+
 ## Common Mitigation
+
+Above all else, **use a strong framework**. They will prevent all of these.
+
+- Don't let attackers inject untrusted input
+- Specify MIME types properly to leverage the browser's type security
+- Don't allow arbitrary redirects
+- Only embed trusted websites in an `<iframe>`
+- Beware of XML external entity attacks
+- Remember the CSS `:visited` selector can leak user history
 
 ## OWASP Top 10
 
@@ -407,11 +510,21 @@ Turns out, we've covered and either mitigated or talked about all of these alrea
 
 ## Test, Stage, Prod
 
-## Terraform
+Put your work in three places of increasing importance.
+
+- **Test** can have whatever the current build is, bugs and all. It's okay if it's broken.
+- **Stage** is the internal version of the next release. This should be relatively stable but where you go to test things work. Don't use real data.
+- **Prod** is where you want to be sure nothing can be broken. This is where you play for keeps.
 
 ## AWS and CSPs
 
+All CSP companies provide some version of security tools. Learn how to use them and set them up properly. If everything is done right, you offload 95% of your security to your CSP.
+
 ## OAuth and JWTs
+
+OAuth is the defacto standard for authentication. It's the protocol behind all the "login with google/facebook/amazon/etc." buttons. 
+
+JWTs are the crypto backed identity for most of the web.
 
 # Questions
 
