@@ -220,31 +220,227 @@ f.Fuzz(func(t *testing.T, in string) {
 
 ## Security Regression Tests
 
+First, what is regression testing?
+
+**Regression testing** is testing which validates old bugs are no longer present in the latest version of the software.
+
+**Security regression testing** is the same principle applied to security vulnerabilities
+
+## Security Regression Testing
+
+1. Write a secure regression test which demonstrates the proof of concept of the attack
+2. Write a fix to mitigate the security vulnerability
+3. Continue to check that test as you perform updates in the future
+
+## iOS 12.4
+
+In iOS 12.3, there was a simple vulnerability which allowed for easily jailbreaking the OS. It was patched, but when 12.4 was released, the vulnerability re-emerged.
+
+Why is this worse than a new vulnerability?
+
+## Old vs New Vulnerabilities
+
+New vulnerabilities are relatively unknown. They may not have a critical mass of knowledge and are unlikely to have complex, highly-developed toolchains.
+
+Old vulnerabilities likely do have well known toolchains, the attack vector is better understood, and people are aware of how to craft actionable exploits for the vulnerability.
+
+## Even More Selling Points
+
+- You understand the scope of an exploit better if you must test it
+- You can apply other testing strategies to find similar vulnerabilities
+- Horizontal pivoting can also be testing across related components very easily
+
+## Security Testing for Heartbleed
+
+Heartbleed is the one where you can get arbitrary amounts of data back from a "heartbeat" webserver endpoint. The correct behavior as defined by the RFC is to ignore such malicious requests.
+
+1. Test a known exploit is no longer answered
+2. Test with request byte count larger than the maximum
+3. Test with payloads of size 0 and max size
+4. Check other packet types in the TLS spec for similar buffer overflow
+
 ## Availability Testing
 
-## Resource Testing
+DoS attacks are all about overwhelming the "load" of the server where load refers to any of the following:
+
+- processing power
+- memory consumption
+- OS resources
+- network bandwidth
+- disk space
+- entropy pools
+- etc.
+
+## Availability Testing
+
+**Availability Testing** is all about testing code in these extreme situations to make sure it performs gracefully.
+
+Beyond the approaches we'll discuss, some special purpose tools exist for the purpose as well:
+
+- Hping3
+- Goldeneye
+- Hulk
+- Slowloris
+
+## Resource Consumption Estimates
+
+Placing your server under 100% load every time you want to do testing is probably not feasible. Instead, we can perform some estimates to determine resource consumption.
+
+1. Run tests for input/data of size (N) where n is whatever measure of resource is worth considering.
+2. Run the same tests for size (N + 1)
+3. Extrapolate the maximum allowable input and determine if it fits within necessary thresholds
+
+## Backtracking Regex Test
+
+```python
+def backtrack_match(s):
+    re.match(r'(D+)+$', s)
+
+
+def time_backtrack(n=1):
+    start = time()
+    backtrack_match('D'*n + '!')
+    return time() - start
+```
+
+## Heuristically Estimate Upper Bound
+
+```python
+def unit_test():
+  MIN_SUPPORTED_SIZE = 50
+  MAX_SUPPORTED_TIME = 600
+  X, y = [], []
+  for i in tqdm(range(22, 27)):
+    X.append(time_backtrack(i))
+    y.append(i)
+
+  model = np.polyfit(X, np.log(y), 1)
+  prediction = np.exp(model[1]) * \
+    np.exp(model[0] * MIN_SUPPORTED_SIZE)
+
+  if prediction > MAX_SUPPORTED_TIME:
+    print(
+      f'Estimated time of {prediction} was greater \
+        than limit {MAX_SUPPORTED_TIME}')
+```
+
+## Fixes
+
+We identify the backtracking to be a problem, so refactor to:
+
+```python
+def backtrack_match(s):
+  re.match(r'(D+)$', s)
+```
+
+We set the constants appropriately, and now our test will fail if we somehow re-introduce backtracking to the regex!
 
 ## Threshold Testing
 
+**Threshold Testing** is a different type of "test" in that it will test the system against some resource limit and throw up a warning when things get to a pre-defined point.
+
+For example, having a warning set up for when your disk reaches 80% usage.
+
+## Trick: Ballast
+
+One simple little trick to allow you to quickly be able to respond to a server running out of storage is to keep a "ballast" file, which is a large file full of nothing which can be deleted in case of an emergency to eek out some extra time.
+
+This is not recommended by many, but it's a nifty trick to be aware of for dire circumstances.
+
 ## Distributed Testing
+
+How do you, as a single developer, test against a DDos attack?
+
+## Distributed Testing
+
+In some situations, where many resources are available, you may be able to build a "mock network" where your system runs and you can do your testing on this simulacrum of the distributed network.
+
+Example: Ganache and testing for ethereum.
+
+## Penetration Testing
+
+Moving through types of availability testing, we arive at perhaps one of the most obvious: **penetration testing**.
+
+Not many locations have the resources to perform these tests, but hiring outside hackers to try to break into your system is one of the easist ways to find out if there are any vulnerabilities.
+
+## Exception Testing
+
+**Exception Testing** could be considered as a specific type of integration testing. When exceptions are thrown, where are they handled? Is all of the code in between the thrower and catcher capable of handling any of the possible exception values they are working with?
 
 ## Best Practices
 
-## Exception Testing
+- TDD
+- High test coverage
+- Integration testing
+- Focus on high security locations and work down
 
 # Assorted Best Practices
 
 ## Documenting Security
 
+When code has security implications, they are likely documented in a few places (i.e. design doc, project issues, internal messages, etc.). Make sure at least one of those places is the code itself.
+
+```js
+// beware: security implication in this function
+```
+
+instead do
+
+```js
+// authentication code: refer to issue #177 for discussion of
+// trust boundaries. code must only be invoked by authenticated
+// and authorized users. see auth middleware in //middleware/auth
+```
+
 ## Dependency Management
+
+As we've said repeatedly, make use of the libraries instead of writing code yourself whenever possible. This adds the additional concern of then vetting external code before adding it to your project. This problem is known as dependency management.
+
+## Choosing Secure Components
+
+This returns to the question of Trust:
+
+- What is the security track record of this component/library/framework?
+- What is the track record of the developers working on it?
+- What alternatives are there?
+- When vulnerabilities are found, are you confident in developers quickly fixing it well?
+- What are the operational costs of maintaining the use of this component?
 
 ## Legacy Security
 
+- Security policies must be regularly updated to maintain relevance
+- Older components should be regularly evaluated and their replacement/update considered
+- Inter-operability problems may prevent the "best" option
+- Once some security tool is set up, it's difficult to re-consider it as being a potential attack later
+
 ## Vulnerability Triage
+
+General priority list:
+
+- Bugs in privileged code or code that accesses valuable secrets
+- Bugs in known vulnerability chains
+- Bugs which cannot be easily assessed for security implications
+- Bugs which appear to have no security problems
 
 ## Crafting Exploits
 
+1. Start with well known attack categories and attempt to apply them to the code in question
+2. Make rigorous use of all the penetration methods you know (e.g. fuzzing, code analysis, etc.)
+3. Build on known bugs to look for vulnerability chains
+4. Practice finding exploits in known vulnerable libraries
+
 ## Secure Your Tools
+
+Don't forget that your tools are a key part of the security of your work. Would you trust a surgeon with rusty tools?
+
+- Securely configure your ecosystem so that breaking trust cannot be done accidentally
+- Regularly update all toolchain components (preferably automatically)
+- Restrict personal computer usage where possible
+- Review all new components before adoption
+- Lock-down computers in the build/release pipeline
+- Maintain secure credentials
+- Regularly audit computer logs, commits, and systems
+- Maintain secure backups
 
 # Questions?
 
@@ -254,3 +450,4 @@ f.Fuzz(func(t *testing.T, in string) {
   - Project work time
 - Group presentations
   - Last week of class
+  - Start May 1st
