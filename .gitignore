@@ -279,3 +279,5 @@ TSWLatexianTemp*
 .DS_Store
 
 __pycache__/
+
+*.key
