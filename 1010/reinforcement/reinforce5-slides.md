@@ -13,7 +13,7 @@
 
 We'll be exploring applications and uses of python!
 
-![Impractical Python Projects](40573304.jpg)
+![Impractical Python Projects](./1010/reinforcement/assets/05/40573304.jpg)
 
 ## Projects
 
@@ -25,7 +25,7 @@ We'll be exploring applications and uses of python!
 
 ## Monty Hall Problem
 
-![A showcase of the Monty Hall problem](monte.png)
+![A showcase of the Monty Hall problem](./1010/reinforcement/assets/05/monte.png)
 
 ---
 
@@ -137,7 +137,7 @@ The win rate of switching is 0.666
 
 ## Monty Hall Math
 
-![A visual demonstration of the answer to the Monty hall problem](monteanswer.svg.png)
+![A visual demonstration of the answer to the Monty hall problem](./1010/reinforcement/assets/05/monteanswer.svg.png)
 
 # Giant Rats
 
@@ -147,15 +147,15 @@ I feel like a mad scientist today, and I've decided that I'd like to create a ra
 
 ## Strategy
 
-![The Rat Breeding Strategy](Screenshot 2022-11-27 at 1.36.44 PM.png)
+![The Rat Breeding Strategy](./1010/reinforcement/assets/05/Screenshot 2022-11-27 at 1.36.44 PM.png)
 
 ---
 
-![Information about the brown rat](Screenshot 2022-11-27 at 1.39.17 PM.png)
+![Information about the brown rat](./1010/reinforcement/assets/05/Screenshot 2022-11-27 at 1.39.17 PM.png)
 
 ---
 
-![Parameters for our program](Screenshot 2022-11-27 at 1.39.29 PM.png)
+![Parameters for our program](./1010/reinforcement/assets/05/Screenshot 2022-11-27 at 1.39.29 PM.png)
 
 ## Simulation
 
@@ -260,15 +260,15 @@ Since the Universe is ~13 billion years old, and even a modestly space faring ci
 
 ---
 
-![A spiral galaxy similar to the Milky Way](M101_hires_STScI-PRC2006-10a.jpg)
+![A spiral galaxy similar to the Milky Way](./1010/reinforcement/assets/05/M101_hires_STScI-PRC2006-10a.jpg)
 
 ## Drake Equation
 
-![A modeling of the drake equation](1350_drank-equation1280.jpg)
+![A modeling of the drake equation](./1010/reinforcement/assets/05/1350_drank-equation1280.jpg)
 
 ## Constant Values
 
-![Fermi Constant Estimates](Screenshot 2022-11-27 at 2.36.24 PM.png)
+![Fermi Constant Estimates](./1010/reinforcement/assets/05/Screenshot 2022-11-27 at 2.36.24 PM.png)
 
 ## Calculating the Drake Equation
 
@@ -383,24 +383,24 @@ We've mentioned before, but just writing code is often the best way to practice!
 
 ---
 
-![kattis.com](Screenshot 2022-12-01 at 9.40.28 AM.png)
+![kattis.com](./1010/reinforcement/assets/05/Screenshot 2022-12-01 at 9.40.28 AM.png)
 
 ---
 
-![codingame.com](Screenshot 2022-12-01 at 9.41.30 AM.png)
+![codingame.com](./1010/reinforcement/assets/05/Screenshot 2022-12-01 at 9.41.30 AM.png)
 
 ---
 
-![projecteuler.net](project-euler.png)
+![projecteuler.net](./1010/reinforcement/assets/05/project-euler.png)
 
 ---
 
-![adventofcode.com](Screenshot 2022-12-01 at 10.38.09 AM (2).png)
+![adventofcode.com](./1010/reinforcement/assets/05/Screenshot 2022-12-01 at 10.38.09 AM (2).png)
 
 
 ## Courses
 
-![UWyo COSC Courses](Screenshot 2022-12-01 at 9.45.40 AM.png)
+![UWyo COSC Courses](./1010/reinforcement/assets/05/Screenshot 2022-12-01 at 9.45.40 AM.png)
 
 ## How to Learn a New Language
 
@@ -452,11 +452,11 @@ Instead of `import` we say `include`.
 
 ## Releasing Something
 
-![2030 Bloodsugar project](Screenshot 2022-12-01 at 9.55.53 AM.png)
+![2030 Bloodsugar project](./1010/reinforcement/assets/05/Screenshot 2022-12-01 at 9.55.53 AM.png)
 
 ## Best Practices
 
-![The C Book](411ejyE8obL._AC_SY780_.jpg)
+![The C Book](./1010/reinforcement/assets/05/411ejyE8obL._AC_SY780_.jpg)
 
 
 # Questions
