@@ -13,12 +13,12 @@ N_E = 0.2
 # fraction of suitable planets where life appears
 F_E = 0.13
 # fraction of planets with life where intelligent life appears
-F_I = 1
+F_I = 0.01
 # fraction of civilizations that develop technology which releases
 # evidence of their existence to the galaxy at large
 F_C = 0.2
 # the length of time they emit this evidence
-L = 10**9
+L = 10**8
 
 RADIO_BUBBLE_RADIUS = 100
 
@@ -46,8 +46,10 @@ def main():
         if val > 1:
             detected_civs += val
 
-    print(f"The number of civs who could have detected each other = {detected_civs}")
-    print("This is a rate of {:.4f}%".format(detected_civs / civilization_count * 100))
+    print(
+        f"The number of civs who could have detected each other = {detected_civs}")
+    print("This is a rate of {:.4f}%".format(
+        detected_civs / civilization_count * 100))
 
 
 def radio_cubes_in_galaxy(radio_bubble_radius):

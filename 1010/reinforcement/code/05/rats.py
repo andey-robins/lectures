@@ -7,17 +7,18 @@ NUM_RATS = 20
 INITIAL_MIN_WT = 200
 INITIAL_MAX_WT = 600
 INITIAL_MODE_WT = 300
-MUTATE_ODDS = 0.01
+MUTATE_ODDS = 0.1
 MUTATE_MIN = 0.5
-MUTATE_MAX = 1.2
+MUTATE_MAX = 1.05
 LITTER_SIZE = 8
-LITTERS_PER_YEAR = 10
-GENERATION_LIMIT = 500
+LITTERS_PER_YEAR = 20
+GENERATION_LIMIT = 100000000
 
 
 def main():
     generations = 0
-    parents = populate(NUM_RATS, INITIAL_MIN_WT, INITIAL_MAX_WT, INITIAL_MODE_WT)
+    parents = populate(NUM_RATS, INITIAL_MIN_WT,
+                       INITIAL_MAX_WT, INITIAL_MODE_WT)
     print(f"initial population weights = {parents}")
     pop_fitness = fitness(parents, GOAL)
     print(f"initial population fitness = {pop_fitness}")
@@ -58,7 +59,7 @@ def select(population, num_to_retain):
 
 
 def breed(rats, litter_size):
-    small_pop = rats[int(len(rats) / 2) :]
+    small_pop = rats[int(len(rats) / 2):]
     random.shuffle(small_pop)
     large_pop = rats[: int(len(rats) / 2)]
     random.shuffle(large_pop)
